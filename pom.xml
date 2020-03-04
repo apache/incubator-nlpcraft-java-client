@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <apache.httpcomponents.ver>4.5.7</apache.httpcomponents.ver>
+        <apache.common.lang.ver>3.8.1</apache.common.lang.ver>
+        <commons.validator.ver>1.6</commons.validator.ver>
+        <gson.ver>2.8.5</gson.ver>
+        <log4j.ver>2.11.2</log4j.ver>
+
+        <nlpcraft.ver>0.7.3</nlpcraft.ver>
+
+        <junit.ver>5.4.0</junit.ver>
+
+        <maven.compiler.version>3.7.0</maven.compiler.version>
+        <maven.exec.version>1.6.0</maven.exec.version>
+        <maven.shade.plugin.ver>3.1.0</maven.shade.plugin.ver>
+        <maven.source.plugin.ver>3.0.1</maven.source.plugin.ver>
+        <maven.gpg.plugin.ver>1.6</maven.gpg.plugin.ver>
+        <maven.nexus.staging.plugin>1.6.7</maven.nexus.staging.plugin>
+        <maven.enforcer.plugin.ver>1.4.1</maven.enforcer.plugin.ver>
+        <maven.surefire.plugin.ver>2.22.1</maven.surefire.plugin.ver>
+        <maven.javadoc.plugin.ver>3.0.0-M1</maven.javadoc.plugin.ver>
+        <maven.jar.plugin.ver>3.1.1</maven.jar.plugin.ver>
+    </properties>
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.nlpcraft</groupId>
+    <artifactId>nlpcraft-java-client</artifactId>
+    <version>0.4.0</version>
+                   
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${apache.httpcomponents.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${apache.common.lang.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-validator</groupId>
+            <artifactId>commons-validator</artifactId>
+            <version>${commons.validator.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.nlpcraft</groupId>
+            <artifactId>nlpcraft</artifactId>
+            <version>${nlpcraft.ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.ver}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.ver}</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin.ver}</version>
+                <configuration>
+                    <rules>
+                        <requireJavaVersion>
+                            <message>
+                                [INFO] ------------------------------------------------------------------------
+                                [ERROR] You are trying to compile NLPCraft with inappropriate JDK version!
+                                [ERROR] Detected JDK Version: ${java.runtime.version}
+                                [ERROR] JDK version should be &gt;= 1.8.0_1.
+                            </message>
+                            <version>[1.8.0,)</version>
+                        </requireJavaVersion>
+                    </rules>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven.javadoc.plugin.ver}</version>
+                <configuration>
+                    <!-- Required as of JDK 8u121 -->
+                    <additionalparam>--allow-script-in-comments, -Xdoclint:none</additionalparam>
+                    <javadocDirectory>${project.basedir}/javadoc</javadocDirectory>
+                    <docfilessubdirs>true</docfilessubdirs>
+                    <encoding>UTF-8</encoding>
+                    <failOnError>false</failOnError>
+                    <sourcepath>${project.basedir}/src/main/java</sourcepath>
+                    <stylesheetfile>${project.basedir}/javadoc/stylesheet.css</stylesheetfile>
+                    <bottom>
+                        <![CDATA[
+                            Copyright &#169; {currentYear} NLPCraft Project. All rights reserved.
+                        ]]>
+                    </bottom>
+                    <top>
+                        <![CDATA[
+                            <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+                            <script src="{@docRoot}/resources/sh/scripts/XRegExp.js" type="text/javascript"></script>
+                            <script src="{@docRoot}/resources/sh/scripts/shCore.js" type="text/javascript"></script>
+                            <script src="{@docRoot}/resources/sh/scripts/shAutoloader.js" type="text/javascript"></script>
+                            <link href="{@docRoot}/resources/sh/styles/shCoreDataLingvo.css" rel="stylesheet" type="text/css" title="Style">
+                            <link href="{@docRoot}/resources/sh/styles/shThemeDataLingvo.css" rel="stylesheet" type="text/css" title="Style">
+                            <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+                            <script async defer src="https://buttons.github.io/buttons.js"></script>
+                        ]]>
+                    </top>
+                    <subpackages>org.nlpcraft.client</subpackages>
+                    <excludePackageNames>
+                        org.nlpcraft.client.impl
+                    </excludePackageNames>
+                    <groups>
+                        <group>
+                            <title>NLPCraft Java Client</title>
+                            <packages>
+                                org.nlpcraft.client
+                            </packages>
+                        </group>
+                    </groups>
+                    <header>
+                        <![CDATA[
+                            NLPCraft Java Client ${project.version}
+                        ]]>
+                    </header>
+                    <footer>
+                        <![CDATA[
+                            <span style="vertical-align: super">NLPCraft Java Client ${project.version}</span>
+                            <a style="vertical-align: super; margin-right: 10px" href="https://github.com/nlpcrafters/nlpcraft-java-client " target="github"><i class="fa fa-github github-logo"></i></a>
+                            <a class="github-button" href="https://github.com/nlpcrafters/nlpcraft-java-client/subscription" data-icon="octicon-eye" aria-label="Watch nlpcrafters/nlpcraft-java-client  on GitHub">Watch</a>
+                            <a class="github-button" href="https://github.com/nlpcrafters/nlpcraft-java-client" data-icon="octicon-star" aria-label="Star nlpcrafters/nlpcraft-java-client  on GitHub">Star</a>
+                            <a class="github-button" href="https://github.com/nlpcrafters/nlpcraft-java-client/fork" data-icon="octicon-repo-forked" aria-label="Fork nlpcrafters/nlpcraft-java-client  on GitHub">Fork</a>
+                            <script type="text/javascript">
+                                SyntaxHighlighter.defaults["auto-links"] = false;
+                                SyntaxHighlighter.defaults["tab-size"] = 2;
+
+                                SyntaxHighlighter.autoloader(
+                                    'java                   {@docRoot}/resources/sh/scripts/shBrushJava.js',
+                                    'js jscript javascript  {@docRoot}/resources/sh/scripts/shBrushJScript.js',
+                                    'text plain             {@docRoot}/resources/sh/scripts/shBrushPlain.js',
+                                    'py python              {@docRoot}/resources/sh/scripts/shBrushPython.js',
+                                    'ruby rails ror rb      {@docRoot}/resources/sh/scripts/shBrushRuby.js',
+                                    'scala                  {@docRoot}/resources/sh/scripts/shBrushScala.js',
+                                    'sql                    {@docRoot}/resources/sh/scripts/shBrushSql.js',
+                                    'xml xhtml xslt html    {@docRoot}/resources/sh/scripts/shBrushXml.js'
+                                );
+                                SyntaxHighlighter.all();
+                            </script>
+                        ]]>
+                    </footer>
+                    <doctitle>
+                        <![CDATA[
+                            <img style="margin-bottom: 10px" src="https://nlpcraft.org/images/nlpcraft_logo_darkblue.png" height="54px"><br>
+                            NLPCraft Java Client API ${project.version}
+                        ]]>
+                    </doctitle>
+                    <windowtitle>NLPCraft Java Client ${project.version}</windowtitle>
+                    <show>public</show>
+                    <verbose>false</verbose>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.ver}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>test-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven.source.plugin.ver}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${maven.nexus.staging.plugin}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    <skipLocalStaging>true</skipLocalStaging>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>sign</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven.gpg.plugin.ver}</version>
+                        <configuration>
+                            <keyname>${gpg.keyname}</keyname>
+                            <passphrase>${gpg.passphrase}</passphrase>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
