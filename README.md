@@ -4,8 +4,8 @@
 <a target=_ href="https://travis-ci.org/nlpcrafters/nlpcraft-java-client"><img alt="Build" src="https://travis-ci.org/nlpcrafters/nlpcraft-java-client.svg?branch=master"></a>&nbsp;
 <a target=_ href="https://search.maven.org/search?q=org.nlpcraft"><img src="https://maven-badges.herokuapp.com/maven-central/org.nlpcraft/nlpcraft-java-client/badge.svg" alt="Maven"></a>
 
-### What is NLPCraft?
-[NLPCraft](https://nlpcraft.org/) is an open source library for adding a natural language interface to any applications. 
+### What is Apache NLPCraft?
+[Apache NLPCraft](https://nlpcraft.org/) is an open source library for adding a natural language interface to any applications. 
 NLPCraft is free and developer friendly, it securely works with any private data source, has no hardware or software 
 lock-in all the while giving you tremendous NLP powers.
 
