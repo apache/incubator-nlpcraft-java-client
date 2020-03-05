@@ -6,8 +6,8 @@ NLPCraft is free and developer friendly, it securely works with any private data
 lock-in.
 
 ### Java Client
-Native Java client provide easy-to-use Java-based API that wraps standard NLPCraft [REST APIs](https://nlpcraft.org/using-rest.html)
-. It can be used by any JVM language that provides Java interop such as Scala, Groovy, or Kotlin. 
+Native Java client provide easy-to-use Java-based API that wraps standard NLPCraft [REST APIs](https://nlpcraft.org/using-rest.html). 
+It can be used by any JVM language that provides Java interop such as Scala, Groovy, or Kotlin. 
 
 For any questions, feedback or suggestions:
 
