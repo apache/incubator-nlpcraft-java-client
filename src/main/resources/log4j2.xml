@@ -27,7 +27,7 @@
         <Root level="DEBUG">
             <AppenderRef ref="CONSOLE"/>
         </Root>
-        <Logger name="org.nlpcraft" level="DEBUG" additivity="false">
+        <Logger name="org.apache.nlpcraft" level="DEBUG" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </Logger>
     </Loggers>

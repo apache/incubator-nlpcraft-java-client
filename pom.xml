@@ -29,8 +29,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.nlpcraft</groupId>
-    <artifactId>nlpcraft-java-client</artifactId>
-    <version>0.4.0</version>
+    <artifactId>java-client</artifactId>
+    <version>0.5.0</version>
                    
     <dependencies>
         <dependency>
@@ -58,6 +58,14 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.ver}</version>
         </dependency>
+        <!--
+        //
+        // TODO:
+        // These import statements need to be fixed once
+        // the main project is migrated over ASF and released on maven.
+        // For now - they are pulling/relying on "old" 'org.nlpcraft' artifact.
+        //
+        -->
         <dependency>
             <groupId>org.nlpcraft</groupId>
             <artifactId>nlpcraft</artifactId>
@@ -131,7 +139,11 @@
                     <stylesheetfile>${project.basedir}/javadoc/stylesheet.css</stylesheetfile>
                     <bottom>
                         <![CDATA[
-                            Copyright &#169; {currentYear} NLPCraft Project. All rights reserved.
+                            <br/>
+                            Copyright &#169; {currentYear} Apache Software Foundation
+                            <br/>
+                            <br/>
+                            <img src="https://www.apache.org/img/ASF20thAnniversary.jpg" height="64px">
                         ]]>
                     </bottom>
                     <top>
@@ -146,30 +158,30 @@
                             <script async defer src="https://buttons.github.io/buttons.js"></script>
                         ]]>
                     </top>
-                    <subpackages>org.nlpcraft.client</subpackages>
+                    <subpackages>org.apache.nlpcraft.client</subpackages>
                     <excludePackageNames>
-                        org.nlpcraft.client.impl
+                        org.apache.nlpcraft.client.impl
                     </excludePackageNames>
                     <groups>
                         <group>
-                            <title>NLPCraft Java Client</title>
+                            <title>Apache NLPCraft - Java Client</title>
                             <packages>
-                                org.nlpcraft.client
+                                org.apache.nlpcraft.client
                             </packages>
                         </group>
                     </groups>
                     <header>
                         <![CDATA[
-                            NLPCraft Java Client ${project.version}
+                            Apache NLPCraft - Java Client ${project.version}
                         ]]>
                     </header>
                     <footer>
                         <![CDATA[
-                            <span style="vertical-align: super">NLPCraft Java Client ${project.version}</span>
-                            <a style="vertical-align: super; margin-right: 10px" href="https://github.com/nlpcrafters/nlpcraft-java-client " target="github"><i class="fa fa-github github-logo"></i></a>
-                            <a class="github-button" href="https://github.com/nlpcrafters/nlpcraft-java-client/subscription" data-icon="octicon-eye" aria-label="Watch nlpcrafters/nlpcraft-java-client  on GitHub">Watch</a>
-                            <a class="github-button" href="https://github.com/nlpcrafters/nlpcraft-java-client" data-icon="octicon-star" aria-label="Star nlpcrafters/nlpcraft-java-client  on GitHub">Star</a>
-                            <a class="github-button" href="https://github.com/nlpcrafters/nlpcraft-java-client/fork" data-icon="octicon-repo-forked" aria-label="Fork nlpcrafters/nlpcraft-java-client  on GitHub">Fork</a>
+                            <span style="vertical-align: super">Apache NLPCraft - Java Client ${project.version}</span>
+                            <a style="vertical-align: super; margin-right: 10px" href="https://github.com/apache/incubator-nlpcraft-java-client" target="github"><i class="fa fa-github github-logo"></i></a>
+                            <a class="github-button" href="https://github.com/apache/incubator-nlpcraft-java-client/subscription" data-icon="octicon-eye" aria-label="Watch on GitHub">Watch</a>
+                            <a class="github-button" href="https://github.com/apache/incubator-nlpcraft-java-client" data-icon="octicon-star" aria-label="Star on GitHub">Star</a>
+                            <a class="github-button" href="https://github.com/apache/incubator-nlpcraft-java-client/fork" data-icon="octicon-repo-forked" aria-label="Fork on GitHub">Fork</a>
                             <script type="text/javascript">
                                 SyntaxHighlighter.defaults["auto-links"] = false;
                                 SyntaxHighlighter.defaults["tab-size"] = 2;
@@ -190,11 +202,10 @@
                     </footer>
                     <doctitle>
                         <![CDATA[
-                            <img style="margin-bottom: 10px" src="https://nlpcraft.org/images/nlpcraft_logo_darkblue.png" height="54px"><br>
-                            NLPCraft Java Client API ${project.version}
+                            Apache NLPCraft - Java Client API ${project.version}
                         ]]>
                     </doctitle>
-                    <windowtitle>NLPCraft Java Client ${project.version}</windowtitle>
+                    <windowtitle>Apache NLPCraft - Java Client ${project.version}</windowtitle>
                     <show>public</show>
                     <verbose>false</verbose>
                 </configuration>
