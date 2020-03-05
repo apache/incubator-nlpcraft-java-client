@@ -996,6 +996,5 @@ public class NCClientImpl implements NCClient {
                 NCStatusResponseBean.class
             )
         );
-    
     }
 }
