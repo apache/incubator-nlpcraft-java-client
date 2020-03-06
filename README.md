@@ -17,6 +17,10 @@ For any questions, feedback or suggestions:
  * Access [GitHub](https://github.com/apache/incubator-nlpcraft-java-client) mirror repository.
  * Ask questions on [dev@nlpcarft.apache.org](mailto:dev@nlpcarft.apache.org)
  
+#### Other Projects
+- [Apache NLPCraft](https://github.com/apache/incubator-nlpcraft) - main NLPCraft project.
+- [Apache NLPCraft UI](https://github.com/apache/incubator-nlpcraft-ui) - Web UI for testing and debugging.
+
 ### Usage
 From any JVM-based application code:
 ```java
