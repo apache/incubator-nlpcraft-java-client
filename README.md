@@ -1,11 +1,13 @@
 <img src="https://nlpcraft.org/images/nlpcraft_logo_black.gif" height="80px">
+<br>
+<a target=_ href="https://gitter.im/apache-nlpcraft/community"><img alt="Gitter" src="https://badges.gitter.im/nlpcraftorg/community.svg"></a>
 
-### What is Apache NLPCraft?
+## What is Apache NLPCraft?
 [Apache NLPCraft](https://nlpcraft.org/) is an open source library for adding a natural language interface to any applications. 
 NLPCraft is free and developer friendly, it securely works with any private data source, and has no hardware or software 
 lock-in.
 
-### Java Client
+## Java Client
 Native Java client provide easy-to-use Java-based API that wraps standard NLPCraft [REST APIs](https://nlpcraft.org/using-rest.html). 
 It can be used by any JVM language that provides Java interop such as Scala, Groovy, or Kotlin. 
 
@@ -17,11 +19,11 @@ For any questions, feedback or suggestions:
  * Access [GitHub](https://github.com/apache/incubator-nlpcraft-java-client) mirror repository.
  * Ask questions on [dev@nlpcarft.apache.org](mailto:dev@nlpcarft.apache.org)
  
-#### Other Projects
+## Other Projects
 - [Apache NLPCraft](https://github.com/apache/incubator-nlpcraft) - main NLPCraft project.
 - [Apache NLPCraft UI](https://github.com/apache/incubator-nlpcraft-ui) - Web UI for testing and debugging.
 
-### Usage
+## Usage
 From any JVM-based application code:
 ```java
 // Get client instance with all defaults.
