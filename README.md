@@ -17,10 +17,10 @@ For any questions, feedback or suggestions:
  * Maven/Grape/Gradle/SBT [instructions](https://nlpcraft.org/download.html#java-client)
  * Post a question at [Stack Overflow](https://stackoverflow.com/questions/ask) using <code>nlpcraft</code> tag
  * Access [GitHub](https://github.com/apache/incubator-nlpcraft-java-client) mirror repository.
- * Ask questions on [dev@nlpcarft.apache.org](mailto:dev@nlpcarft.apache.org)
+ * Join on [dev@nlpcarft.apache.org](mailto:dev@nlpcarft.apache.org)
  
 ## Other Projects
-- [Apache NLPCraft](https://github.com/apache/incubator-nlpcraft) - main NLPCraft project.
+- [Apache NLPCraft](https://github.com/apache/incubator-nlpcraft) - Main NLPCraft project.
 - [Apache NLPCraft UI](https://github.com/apache/incubator-nlpcraft-ui) - Web UI for testing and debugging.
 
 ## Usage
