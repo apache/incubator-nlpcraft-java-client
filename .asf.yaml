@@ -22,6 +22,10 @@ github:
     squash: true
     merge: true
     rebase: true
+  features:
+    wiki: false
+    issues: false
+    projects: false
   labels:
     - "java"
     - "nlp"
