@@ -18,11 +18,12 @@
 github:
   description: "Native Java Client for Apache NLPCraft."
   homepage: https://nlpcraft.apache.org/
+  enabled_merge_buttons:
+    squash: true
+    merge: true
+    rebase: true
   labels:
-    - java
-    - nlp
-    - apache
-    - natural language processing
-  features:
-    # Enable issues management.
-    issues: true
+    - "java"
+    - "nlp"
+    - "apache"
+    - "natural language processing"
