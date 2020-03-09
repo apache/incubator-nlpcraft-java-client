@@ -16,8 +16,8 @@
 #
 
 github:
-  description: "Native Java Client for Apache NLPCraft. https://nlpcraft.apache.org/"
-  homepage: https://foobar.apache.org/
+  description: "Native Java Client for Apache NLPCraft."
+  homepage: https://nlpcraft.apache.org/
   labels:
     - java
     - nlp
