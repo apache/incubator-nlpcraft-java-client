@@ -1,6 +1,6 @@
 <img src="https://nlpcraft.org/images/nlpcraft_logo_black.gif" height="80px">
 <br>
-<a target=_ href="https://gitter.im/apache-nlpcraft/community"><img alt="Gitter" src="https://badges.gitter.im/nlpcraftorg/community.svg"></a>
+<a target=_ href="https://gitter.im/apache-nlpcraft/community"><img alt="Gitter" src="https://badges.gitter.im/apache-nlpcraft/community.svg"></a>
 
 ## What is Apache NLPCraft?
 [Apache NLPCraft](https://nlpcraft.org/) is an open source library for adding a natural language interface to any applications. 
