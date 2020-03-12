@@ -139,11 +139,13 @@
                     <stylesheetfile>${project.basedir}/javadoc/stylesheet.css</stylesheetfile>
                     <bottom>
                         <![CDATA[
-                            <br/>
-                            Copyright &#169; {currentYear} Apache Software Foundation
-                            <br/>
-                            <br/>
-                            <img src="https://www.apache.org/img/ASF20thAnniversary.jpg" height="64px">
+                            <center>
+                                <br/>
+                                <span style="font-size: larger">Copyright &#169; {currentYear} Apache Software Foundation</span>
+                                <br/>
+                                <br/>
+                                <img src="https://www.apache.org/img/ASF20thAnniversary.jpg" height="64px">
+                            </center>
                         ]]>
                     </bottom>
                     <top>
@@ -172,7 +174,7 @@
                     </groups>
                     <header>
                         <![CDATA[
-                            Apache NLPCraft - Java Client ${project.version}
+                            Apache NLPCraft - Java Client <span style="font-size: 80%">${project.version}</span>
                         ]]>
                     </header>
                     <footer>
@@ -202,7 +204,7 @@
                     </footer>
                     <doctitle>
                         <![CDATA[
-                            Apache NLPCraft - Java Client API ${project.version}
+                            Apache NLPCraft - Java Client API <span style="font-size: 80%">${project.version}</span>
                         ]]>
                     </doctitle>
                     <windowtitle>Apache NLPCraft - Java Client ${project.version}</windowtitle>
