@@ -15,6 +15,7 @@
 # limitations under the License.
 #
 
+# Metadata.
 github:
   description: "Native Java Client for Apache NLPCraft."
   homepage: https://nlpcraft.apache.org/
@@ -30,3 +31,8 @@ github:
     - "java"
     - "nlp"
     - "apache"
+
+# PR whitelist.
+jenkins:
+  github_whitelist:
+    - aradzinski

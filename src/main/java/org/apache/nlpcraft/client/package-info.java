@@ -17,7 +17,7 @@
 
 /**
  * NLPCraft Java Client API - provides native wrapper for
- * <a target=_ href="https://nlpcraft.org/using-rest.html">REST APIs</a> for any JVM-based languages
+ * <a target=_ href="https://nlpcraft.apache.org/using-rest.html">REST APIs</a> for any JVM-based languages
  * like Java, Scala, Kotlin or Groovy.
  */
 package org.apache.nlpcraft.client;

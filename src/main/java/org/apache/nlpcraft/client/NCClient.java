@@ -22,10 +22,10 @@ import java.util.*;
 
 /**
  * Java client API. Java REST client provides native and easy-to-use wrapper for NLPCraft
- * <a target=_ href="https://nlpcraft.org/using-rest.html">REST APIs</a> for any JVM-based languages
+ * <a target=_ href="https://nlpcraft.apache.org/using-rest.html">REST APIs</a> for any JVM-based languages
  * like Java, Scala, Kotlin or Groovy. Note that NLPCraft REST APIs allow to submit the request to existing
  * deployed data model and perform other related, auxiliary operations. To create data models you need to
- * use main <a target=_ href="https://nlpcraft.org/apis/latest/index.html">NLPCraft APIs</a>.
+ * use main <a target=_ href="https://nlpcraft.apache.org/apis/latest/index.html">NLPCraft APIs</a>.
  * <p>
  * <b>External User ID</b><br>
  * Several methods on Java client accept external "on-behalf-of" user ID (<code>usrExtId</code>) additionally to the regular
