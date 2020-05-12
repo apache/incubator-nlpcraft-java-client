@@ -56,15 +56,8 @@ import org.apache.nlpcraft.client.impl.beans.NCTokenCreationBean;
 import org.apache.nlpcraft.client.impl.beans.NCUserAddBean;
 import org.apache.nlpcraft.client.impl.beans.NCUserBean;
 import org.apache.nlpcraft.client.impl.beans.NCUsersAllBean;
-
-//
-// TODO:
-// These import statements need to be fixed once
-// the main project is migrated over ASF and released on maven.
-// For now - they are pulling/relying on "old" 'org.nlpcraft' artifact.
-//
-import org.nlpcraft.probe.embedded.NCEmbeddedProbe;
-import org.nlpcraft.probe.embedded.NCEmbeddedResult;
+import org.apache.nlpcraft.probe.embedded.NCEmbeddedProbe;
+import org.apache.nlpcraft.probe.embedded.NCEmbeddedResult;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

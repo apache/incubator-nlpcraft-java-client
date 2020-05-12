@@ -2,19 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
         <apache.httpcomponents.ver>4.5.7</apache.httpcomponents.ver>
         <apache.common.lang.ver>3.8.1</apache.common.lang.ver>
         <commons.validator.ver>1.6</commons.validator.ver>
         <gson.ver>2.8.5</gson.ver>
         <log4j.ver>2.11.2</log4j.ver>
-
-        <nlpcraft.ver>0.7.3</nlpcraft.ver>
-
+        <nlpcraft.ver>0.5.0</nlpcraft.ver>
         <junit.ver>5.4.0</junit.ver>
-
         <maven.compiler.version>3.7.0</maven.compiler.version>
         <maven.exec.version>1.6.0</maven.exec.version>
         <maven.shade.plugin.ver>3.1.0</maven.shade.plugin.ver>
@@ -25,13 +23,52 @@
         <maven.surefire.plugin.ver>2.22.1</maven.surefire.plugin.ver>
         <maven.javadoc.plugin.ver>3.0.0-M1</maven.javadoc.plugin.ver>
         <maven.jar.plugin.ver>3.1.1</maven.jar.plugin.ver>
+        <apache.rat.plugin.ver>0.13</apache.rat.plugin.ver>
     </properties>
 
-    <modelVersion>4.0.0</modelVersion>
+    <name>NLPCraft - Java Client</name>
     <groupId>org.apache.nlpcraft</groupId>
     <artifactId>java-client</artifactId>
     <version>0.5.0</version>
-                   
+    <url>https://nlpcraft.apache.org</url>
+    <description>An open source API to convert natural language into actions.</description>
+
+    <parent>
+        <groupId>org.apache</groupId>
+        <artifactId>apache</artifactId>
+        <version>10</version>
+    </parent>
+
+    <developers>
+        <developer>
+            <id>aradzinski</id>
+            <name>Aaron Radzinski</name>
+            <email>aradzinski@apache.org</email>
+            <organization>apache</organization>
+            <organizationUrl>http://apache.org</organizationUrl>
+            <roles>
+                <role>architect</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/apache/incubator-nlpcraft.git</url>
+        <connection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</developerConnection>
+        <!-- Set actual tag name here -->
+        <tag>HEAD</tag>
+    </scm>
+
     <dependencies>
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
@@ -58,20 +95,11 @@
             <artifactId>log4j-core</artifactId>
             <version>${log4j.ver}</version>
         </dependency>
-        <!--
-        //
-        // TODO:
-        // These import statements need to be fixed once
-        // the main project is migrated over ASF and released on maven.
-        // For now - they are pulling/relying on "old" 'org.nlpcraft' artifact.
-        //
-        -->
         <dependency>
-            <groupId>org.nlpcraft</groupId>
+            <groupId>org.apache.nlpcraft</groupId>
             <artifactId>nlpcraft</artifactId>
             <version>${nlpcraft.ver}</version>
         </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -112,7 +140,7 @@
                                 [ERROR] Detected JDK Version: ${java.runtime.version}
                                 [ERROR] JDK version should be &gt;= 1.8.0_1.
                             </message>
-                            <version>[1.8.0,)</version>
+                            <version>1.8,11</version>
                         </requireJavaVersion>
                     </rules>
                 </configuration>
@@ -262,7 +290,7 @@
 
     <profiles>
         <profile>
-            <id>sign</id>
+            <id>release</id>
             <activation>
                 <property>
                     <name>performRelease</name>
@@ -271,6 +299,33 @@
             </activation>
             <build>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.rat</groupId>
+                        <artifactId>apache-rat-plugin</artifactId>
+                        <version>${apache.rat.plugin.ver}</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>.gitignore</exclude>
+                                <exclude>build</exclude>
+                                <exclude>.idea</exclude>
+                                <exclude>venv</exclude>
+                                <exclude>*.iml</exclude>
+                                <exclude>**/*.txt</exclude>
+                                <exclude>idea/**/*</exclude>
+                                <exclude>zips/**/*</exclude>
+                                <exclude>javadoc/**/*</exclude>
+                            </excludes>
+                            <numUnapprovedLicenses>1000000</numUnapprovedLicenses>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>check</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
@@ -284,7 +339,7 @@
                                 <id>sign-artifacts</id>
                                 <phase>verify</phase>
                                 <goals>
-                                    <goal>sign</goal>
+                                    <goal>release</goal>
                                 </goals>
                             </execution>
                         </executions>
