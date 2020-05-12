@@ -325,8 +325,8 @@
                             <excludes>
                                 <exclude>.gitignore</exclude>
                                 <exclude>build</exclude>
-                                <exclude>.idea</exclude>
-                                <exclude>venv</exclude>
+                                <exclude>.idea/**/*</exclude>
+                                <exclude>.git/**/*</exclude>
                                 <exclude>*.iml</exclude>
                                 <exclude>**/*.txt</exclude>
                                 <exclude>idea/**/*</exclude>
