@@ -42,6 +42,14 @@
         <maven.javadoc.plugin.ver>3.0.0-M1</maven.javadoc.plugin.ver>
         <maven.jar.plugin.ver>3.1.1</maven.jar.plugin.ver>
         <apache.rat.plugin.ver>0.13</apache.rat.plugin.ver>
+
+        <!--
+            NOTE: this library is NOT included in binary build and is optional
+            for NLPCraft. It is licensed under GPLv3 and has to be downloaded separately by
+            the end user, when required.
+            TODO: how to avoid set concrete version from main project?
+        -->
+        <stanford.corenlp.ver>3.9.2</stanford.corenlp.ver>
     </properties>
 
     <name>NLPCraft - Java Client</name>
@@ -280,6 +288,25 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven.shade.plugin.ver}</version>
+                <executions>
+                    <execution>
+                        <id>jar.all.deps</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>
+                                ${project.build.directory}/${project.artifactId}-${project.version}-all-deps.jar
+                            </outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven.source.plugin.ver}</version>
                 <executions>
@@ -315,6 +342,29 @@
                     <value>true</value>
                 </property>
             </activation>
+            <dependencies>
+                <!--Stanford NLP dependencies should be excluded from build zip.-->
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${stanford.corenlp.ver}</version>
+                    <scope>provided</scope>
+                    <!-- org.apache.tika contains javax.activation. -->
+                    <exclusions>
+                        <exclusion>
+                            <groupId>javax.activation</groupId>
+                            <artifactId>javax.activation-api</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>stanford-corenlp</artifactId>
+                    <version>${stanford.corenlp.ver}</version>
+                    <classifier>models</classifier>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
             <build>
                 <plugins>
                     <plugin>
@@ -357,7 +407,7 @@
                                 <id>sign-artifacts</id>
                                 <phase>verify</phase>
                                 <goals>
-                                    <goal>release</goal>
+                                    <goal>sign</goal>
                                 </goals>
                             </execution>
                         </executions>
