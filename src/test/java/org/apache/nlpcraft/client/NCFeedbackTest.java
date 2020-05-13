@@ -45,8 +45,7 @@ class NCFeedbackTest extends NCTestAdapter {
      */
     private void test0(Long usrId, String usrExtId) throws Exception {
         // Adds request.
-        String srvReqId = admCli.ask(MDL_ID, "Ping me in 3 minutes", null, false, usrId, usrExtId
-        );
+        String srvReqId = admCli.ask(MDL_ID, "Ping me in 3 minutes", null, false, usrId, usrExtId);
     
         // Creates 2 feedback.
         long fId1 = admCli.addFeedback(srvReqId, 0.5, null, usrId, usrExtId);

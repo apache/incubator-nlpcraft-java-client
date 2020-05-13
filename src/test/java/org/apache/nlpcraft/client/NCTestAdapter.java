@@ -54,7 +54,7 @@ abstract class NCTestAdapter {
     protected long admUsrId;
 
     /** */
-    private Optional<Class<? extends NCModel>> mdlOpt = getModelClass();
+    private final Optional<Class<? extends NCModel>> mdlOpt = getModelClass();
 
     /**
      *
@@ -70,8 +70,7 @@ abstract class NCTestAdapter {
      */
     @BeforeEach
     void setUp() throws Exception {
-        if (mdlOpt.isPresent())
-            NCEmbeddedProbe.start(mdlOpt.get());
+        mdlOpt.ifPresent(NCEmbeddedProbe::start);
 
         admCli = new NCClientBuilder().build();
         
