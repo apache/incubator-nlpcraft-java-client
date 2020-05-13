@@ -17,7 +17,11 @@
 
 package org.apache.nlpcraft.client;
 
+import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -25,6 +29,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * REST client test. Methods `probe/*`.
  */
 class NCProbesTest extends NCTestAdapter {
+    @Override
+    Optional<Class<? extends NCModel>> getModelClass() {
+        return Optional.of(AlarmModel.class);
+    }
+
     /**
      *
      * @throws Exception

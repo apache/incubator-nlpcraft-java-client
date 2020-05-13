@@ -17,11 +17,15 @@
 
 package org.apache.nlpcraft.client;
 
+import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * REST client test. Methods `user/*`.
@@ -29,7 +33,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class NCUserTest extends NCTestAdapter {
     /** */
     private static final String MDL_ID = "nlpcraft.alarm.ex";
-    
+
+    @Override
+    Optional<Class<? extends NCModel>> getModelClass() {
+        return Optional.of(AlarmModel.class);
+    }
+
     /**
      *
      * @param u

@@ -17,6 +17,8 @@
 
 package org.apache.nlpcraft.client;
 
+import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -34,7 +36,12 @@ class NCAskTest extends NCTestAdapter {
     
     /** */
     private static final int MAX_TEST_TIME = 20000;
-    
+
+    @Override
+    Optional<Class<? extends NCModel>> getModelClass() {
+        return Optional.of(AlarmModel.class);
+    }
+
     /**
      *
      * @param txt

@@ -17,6 +17,8 @@
 
 package org.apache.nlpcraft.client;
 
+import org.apache.nlpcraft.model.NCModel;
+import org.apache.nlpcraft.probe.embedded.NCEmbeddedProbe;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -25,12 +27,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 /**
  * REST client test adapter.
  */
-class NCTestAdapter {
+abstract class NCTestAdapter {
     /**
      *
      */
@@ -47,6 +52,17 @@ class NCTestAdapter {
     
     /** */
     protected long admUsrId;
+
+    /** */
+    private Optional<Class<? extends NCModel>> mdlOpt = getModelClass();
+
+    /**
+     *
+     * @return
+     */
+    Optional<Class<? extends NCModel>> getModelClass() {
+        return Optional.empty();
+    }
     
     /**
      *
@@ -54,6 +70,9 @@ class NCTestAdapter {
      */
     @BeforeEach
     void setUp() throws Exception {
+        if (mdlOpt.isPresent())
+            NCEmbeddedProbe.start(mdlOpt.get());
+
         admCli = new NCClientBuilder().build();
         
         admUsrId = get(admCli.getAllUsers(), (u) -> NCClientBuilder.DFLT_EMAIL.equals(u.getEmail())).getId();
@@ -73,6 +92,9 @@ class NCTestAdapter {
     
             admCli.close();
         }
+
+        if (mdlOpt.isPresent())
+            NCEmbeddedProbe.stop();
     }
     
     /**

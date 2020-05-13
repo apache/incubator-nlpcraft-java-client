@@ -36,7 +36,6 @@
         <maven.shade.plugin.ver>3.1.0</maven.shade.plugin.ver>
         <maven.source.plugin.ver>3.0.1</maven.source.plugin.ver>
         <maven.gpg.plugin.ver>1.6</maven.gpg.plugin.ver>
-        <maven.nexus.staging.plugin>1.6.7</maven.nexus.staging.plugin>
         <maven.enforcer.plugin.ver>1.4.1</maven.enforcer.plugin.ver>
         <maven.surefire.plugin.ver>2.22.1</maven.surefire.plugin.ver>
         <maven.javadoc.plugin.ver>3.0.0-M1</maven.javadoc.plugin.ver>
@@ -290,18 +289,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${maven.nexus.staging.plugin}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
-                    <skipLocalStaging>true</skipLocalStaging>
-                </configuration>
             </plugin>
         </plugins>
     </build>

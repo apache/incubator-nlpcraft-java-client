@@ -24,10 +24,10 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Root level="DEBUG">
+        <Root level="INFO">
             <AppenderRef ref="CONSOLE"/>
         </Root>
-        <Logger name="org.apache.nlpcraft" level="DEBUG" additivity="false">
+        <Logger name="org.apache.nlpcraft" level="INFO" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </Logger>
     </Loggers>
