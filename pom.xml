@@ -38,9 +38,10 @@
         <maven.gpg.plugin.ver>1.6</maven.gpg.plugin.ver>
         <maven.enforcer.plugin.ver>1.4.1</maven.enforcer.plugin.ver>
         <maven.surefire.plugin.ver>2.22.1</maven.surefire.plugin.ver>
-        <maven.javadoc.plugin.ver>3.0.0-M1</maven.javadoc.plugin.ver>
+        <maven.javadoc.plugin.ver>3.2.0</maven.javadoc.plugin.ver>
         <maven.jar.plugin.ver>3.1.1</maven.jar.plugin.ver>
         <apache.rat.plugin.ver>0.13</apache.rat.plugin.ver>
+        <maven.bazaarvoice.plugin.ver>0.9</maven.bazaarvoice.plugin.ver>
     </properties>
 
     <name>NLPCraft - Java Client</name>
@@ -138,14 +139,6 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven.surefire.plugin.ver}</version>
-                <configuration>
-                    <skipTests>true</skipTests>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
                 <version>${maven.enforcer.plugin.ver}</version>
                 <configuration>
@@ -174,8 +167,9 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven.javadoc.plugin.ver}</version>
                 <configuration>
+                    <source>1.8</source>
                     <!-- Required as of JDK 8u121 -->
-                    <additionalparam>--allow-script-in-comments, -Xdoclint:none</additionalparam>
+                    <additionalOptions>--allow-script-in-comments, -Xdoclint:none</additionalOptions>
                     <javadocDirectory>${project.basedir}/javadoc</javadocDirectory>
                     <docfilessubdirs>true</docfilessubdirs>
                     <encoding>UTF-8</encoding>
@@ -205,7 +199,8 @@
                             <script async defer src="https://buttons.github.io/buttons.js"></script>
                         ]]>
                     </top>
-                    <subpackages>org.apache.nlpcraft.client</subpackages>
+                    <!-- Disabled because of https://bugs.openjdk.java.net/browse/JDK-8193030 -->
+                    <!-- <subpackages>org.apache.nlpcraft.client</subpackages> -->
                     <excludePackageNames>
                         org.apache.nlpcraft.client.impl
                     </excludePackageNames>
@@ -287,6 +282,90 @@
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Copy server dependencies for integration tests. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-server-dependencies</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/server-lib</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Start server for integration tests. -->
+            <plugin>
+                <groupId>com.bazaarvoice.maven.plugins</groupId>
+                <artifactId>process-exec-maven-plugin</artifactId>
+                <version>${maven.bazaarvoice.plugin.ver}</version>
+                <executions>
+                    <execution>
+                        <id>pre-integration-test</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                        <configuration>
+                            <name>server</name>
+                            <healthcheckUrl>http://localhost:8081/api/v1/health</healthcheckUrl>
+                            <waitAfterLaunch>180</waitAfterLaunch>
+                            <arguments>
+                                <argument>java</argument>
+                                <argument>-Xmx4G</argument>
+                                <argument>-Xms4G</argument>
+                                <argument>-cp</argument>
+                                <argument>${project.build.directory}/server-lib/*</argument>
+                                <argument>org.apache.nlpcraft.server.NCServer</argument>
+                                <argument>-server</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-all</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop-all</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Run integration tests. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.plugin.ver}</version>
+                <configuration>
+                    <!-- Skips all tests on phase `test`. -->
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <!-- All tests are defined as integration. -->
+                    <execution>
+                        <id>integration-tests</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                            <!-- Mandatory part. -->
+                            <includes>
+                                <include>**/*.*</include>
+                            </includes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
