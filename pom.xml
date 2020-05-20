@@ -84,7 +84,7 @@
         <connection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</developerConnection>
         <!-- Set actual tag name here -->
-        <tag>HEAD</tag>
+        <tag>v0.5.0</tag>
     </scm>
 
     <dependencies>
