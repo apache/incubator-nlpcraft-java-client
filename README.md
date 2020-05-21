@@ -34,7 +34,7 @@ It can be used by any JVM language that provides Java interop such as Scala, Gro
 
 For any questions, feedback or suggestions:
 
- * Latest [Javadoc](https://github.com/apache/incubator-nlpcraft-java-client/apis/latest/index.html) and [REST APIs](https://nlpcraft.apache.org/using-rest.html)
+ * Latest [Javadoc](https://nlpcraft.apache.org/apis/java-client/latest/index.html) and [REST APIs](https://nlpcraft.apache.org/using-rest.html)
  * Maven/Grape/Gradle/SBT [instructions](https://nlpcraft.apache.org/download.html#java-client)
  * Post a question at [Stack Overflow](https://stackoverflow.com/questions/ask) using <code>nlpcraft</code> tag
  * Access [GitHub](https://github.com/apache/incubator-nlpcraft-java-client) mirror repository.
