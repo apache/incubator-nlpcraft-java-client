@@ -117,6 +117,12 @@
             <groupId>org.apache.nlpcraft</groupId>
             <artifactId>nlpcraft</artifactId>
             <version>${nlpcraft.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>edu.stanford.nlp</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
