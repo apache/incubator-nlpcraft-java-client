@@ -49,7 +49,7 @@ import java.util.*;
  *     // Perform any necessary calls...
  *     NCResult res = cli.askSync("my.model.id", txt);
  *
- *     // Close client & sign out at the end.
+ *     // Close client &amp; sign out at the end.
  *     cli.close();
  * </pre>
  * 
