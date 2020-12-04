@@ -17,7 +17,7 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,19 +25,18 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
+
 /**
  * REST client test. Checks user permissions.
  */
 class NCPermissionsTest extends NCTestAdapter {
     /** */
-    private static final String MDL_ID = "nlpcraft.alarm.ex";
-    
-    /** */
     private NCClient client;
 
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(AlarmModel.class);
+        return Optional.of(NCCommonSpecModel.class);
     }
 
     /**

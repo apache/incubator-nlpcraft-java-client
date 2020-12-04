@@ -39,6 +39,7 @@ import org.apache.nlpcraft.client.NCFeedback;
 import org.apache.nlpcraft.client.NCNewCompany;
 import org.apache.nlpcraft.client.NCProbe;
 import org.apache.nlpcraft.client.NCResult;
+import org.apache.nlpcraft.client.NCSuggestionData;
 import org.apache.nlpcraft.client.NCUser;
 import org.apache.nlpcraft.client.impl.beans.NCAskBean;
 import org.apache.nlpcraft.client.impl.beans.NCAskSyncBean;
@@ -52,12 +53,13 @@ import org.apache.nlpcraft.client.impl.beans.NCProbesAllBean;
 import org.apache.nlpcraft.client.impl.beans.NCRequestStateBean;
 import org.apache.nlpcraft.client.impl.beans.NCSigninBean;
 import org.apache.nlpcraft.client.impl.beans.NCStatusResponseBean;
+import org.apache.nlpcraft.client.impl.beans.NCSuggestionResultBean;
 import org.apache.nlpcraft.client.impl.beans.NCTokenCreationBean;
 import org.apache.nlpcraft.client.impl.beans.NCUserAddBean;
 import org.apache.nlpcraft.client.impl.beans.NCUserBean;
 import org.apache.nlpcraft.client.impl.beans.NCUsersAllBean;
-import org.apache.nlpcraft.probe.embedded.NCEmbeddedProbe;
-import org.apache.nlpcraft.probe.embedded.NCEmbeddedResult;
+import org.apache.nlpcraft.model.tools.embedded.NCEmbeddedProbe;
+import org.apache.nlpcraft.model.tools.embedded.NCEmbeddedResult;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -324,7 +326,7 @@ public class NCClientImpl implements NCClient {
      */
     private <T extends NCStatusResponseBean> T checkAndExtract(String js, Type type) throws NCClientException {
         T t = gson.fromJson(js, type);
-        
+
         checkStatus(t.getStatus());
         
         return t;
@@ -340,7 +342,7 @@ public class NCClientImpl implements NCClient {
      * @throws IllegalStateException
      */
     @SafeVarargs
-    private final String post(String url, Pair<String, Object>... ps) throws NCClientException, IOException {
+    private String post(String url, Pair<String, Object>... ps) throws NCClientException, IOException {
         if (!started)
             throw new IllegalStateException("Client is not initialized.");
         
@@ -403,7 +405,7 @@ public class NCClientImpl implements NCClient {
     
                 if (js == null)
                     throw new NCClientException(String.format("Unexpected empty response [code=%d]", code));
-    
+
                 if (code == 200)
                     return js;
     
@@ -434,16 +436,6 @@ public class NCClientImpl implements NCClient {
     private void notNull(String v, String name) throws IllegalArgumentException {
         if (v == null || v.trim().isEmpty())
             throw new IllegalArgumentException(String.format("Parameter cannot be null or empty: '%s'", name));
-    }
-    
-    /**
-     * @param v
-     * @param name
-     * @throws IllegalArgumentException
-     */
-    private void notNull(Object v, String name) throws IllegalArgumentException {
-        if (v == null)
-            throw new IllegalArgumentException(String.format("Parameter cannot be null: '%s'", name));
     }
     
     /**
@@ -566,7 +558,7 @@ public class NCClientImpl implements NCClient {
                     "user/get",
                     Pair.of("acsTok", acsTok),
                     Pair.of("id", id),
-                    Pair.of("extId", extId)
+                    Pair.of("usrExtId", extId)
                 ),
                 NCUserBean.class
             );
@@ -989,5 +981,20 @@ public class NCClientImpl implements NCClient {
                 NCStatusResponseBean.class
             )
         );
+    }
+
+    @Override
+    public NCSuggestionData suggestSynonyms(String mdlId, Double minScore) throws NCClientException, IOException {
+        NCSuggestionResultBean res = checkAndExtract(
+            post(
+                "model/sugsyn",
+                Pair.of("acsTok", acsTok),
+                Pair.of("mdlId", mdlId),
+                Pair.of("minScore", minScore)
+            ),
+            NCSuggestionResultBean.class
+        );
+
+        return res.getResult();
     }
 }

@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class NCUserBean extends NCStatusResponseBean implements NCUser {
     @SerializedName("id") private long id;
-    @SerializedName("extId") private String extId;
+    @SerializedName("usrExtId") private String usrExtId;
     @SerializedName("email") private String email;
     @SerializedName("firstName") private String firstName;
     @SerializedName("lastName") private String lastName;
@@ -35,43 +35,28 @@ public class NCUserBean extends NCStatusResponseBean implements NCUser {
     @SerializedName("isAdmin") private boolean isAdmin;
     @SerializedName("properties") private Map<String, String> properties;
     
-    @Override
-    public long getId() {
+    @Override public long getId() {
         return id;
     }
-    
-    @Override
-    public String getEmail() {
+    @Override public String getEmail() {
         return email;
     }
-    
-    @Override
-    public String getFirstName() {
-        return firstName;
-    }
-    
-    @Override
-    public String getLastName() {
-        return lastName;
-    }
-    
-    @Override
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-    
-    @Override
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-    
-    @Override
-    public String getExternalId() {
-        return extId;
-    }
-    
-    @Override
-    public Map<String, String> getProperties() {
+    @Override public String getFirstName() {
+    return firstName;
+}
+    @Override public String getLastName() {
+    return lastName;
+}
+    @Override public String getAvatarUrl() {
+    return avatarUrl;
+}
+    @Override public boolean isAdmin() {
+    return isAdmin;
+}
+    @Override public String getExternalId() {
+    return usrExtId;
+}
+    @Override public Map<String, String> getProperties() {
         return properties;
     }
 }

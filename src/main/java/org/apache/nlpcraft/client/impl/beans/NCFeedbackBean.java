@@ -29,75 +29,41 @@ public class NCFeedbackBean implements NCFeedback {
     private double score;
     private String comment;
     private long createTstamp;
-    
-    @Override
-    public long getId() {
+
+    @Override public String getServerRequestId() {
+        return srvReqId;
+    }
+    @Override public long getCreateTimestamp() {
+        return createTstamp;
+    }
+    @Override public long getUserId() {
+        return usrId;
+    }
+    @Override public double getScore() {
+        return score;
+    }
+    @Override public String getComment() {
+        return comment;
+    }
+    @Override public long getId() {
         return id;
     }
 
-    /**
-     * Sets feedback record ID.
-     */
     public void setId(long id) {
         this.id = id;
     }
-
-    @Override
-    public String getServerRequestId() {
-        return srvReqId;
-    }
-
-    /**
-     * Sets server request ID.
-     */
     public void setServerRequestId(String srvReqId) {
         this.srvReqId = srvReqId;
     }
-    
-    @Override
-    public long getUserId() {
-        return usrId;
-    }
-
-    /**
-     * Sets user ID.
-     */
     public void setUsrId(long usrId) {
         this.usrId = usrId;
     }
-    
-    @Override
-    public double getScore() {
-        return score;
-    }
-
-    /**
-     * Sets feedback score.
-     */
     public void setScore(double score) {
         this.score = score;
     }
-    
-    @Override
-    public String getComment() {
-        return comment;
-    }
-
-    /**
-     * Sets feedback comment.
-     */
     public void setComment(String comment) {
         this.comment = comment;
     }
-    
-    @Override
-    public long getCreateTimestamp() {
-        return createTstamp;
-    }
-
-    /**
-     * Sets create timestamp.
-     */
     public void setCreateTstamp(long createTstamp) {
         this.createTstamp = createTstamp;
     }

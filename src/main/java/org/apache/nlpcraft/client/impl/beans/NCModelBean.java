@@ -28,18 +28,13 @@ public class NCModelBean implements NCModel {
     @SerializedName("name") private String name;
     @SerializedName("version") private String version;
     
-    @Override
-    public String getId() {
+    @Override public String getId() {
         return id;
     }
-    
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return name;
     }
-    
-    @Override
-    public String getVersion() {
+    @Override public String getVersion() {
         return version;
     }
 }

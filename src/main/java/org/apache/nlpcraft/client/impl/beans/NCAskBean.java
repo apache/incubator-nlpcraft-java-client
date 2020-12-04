@@ -25,9 +25,6 @@ import com.google.gson.annotations.*;
 public class NCAskBean extends NCStatusResponseBean  {
     @SerializedName("srvReqId") private String srvReqId;
 
-    /**
-     * Gets server request ID.
-     */
     public String getServerRequestId() {
         return srvReqId;
     }

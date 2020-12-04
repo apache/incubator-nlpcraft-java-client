@@ -25,9 +25,6 @@ import com.google.gson.annotations.SerializedName;
 public class NCUserAddBean extends NCStatusResponseBean  {
     @SerializedName("id") private long id;
 
-    /**
-     * Gets ID of the newly created user.
-     */
     public long getId() {
         return id;
     }

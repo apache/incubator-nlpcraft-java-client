@@ -27,13 +27,10 @@ public class NCTokenCreationBean extends NCStatusResponseBean implements NCNewCo
     @SerializedName("token") private String token;
     @SerializedName("adminId") private long adminId;
     
-    @Override
-    public String getToken() {
+    @Override public String getToken() {
         return token;
     }
-    
-    @Override
-    public long getAdminUserId() {
+    @Override public long getAdminUserId() {
         return adminId;
     }
 }

@@ -19,5 +19,19 @@
  * NLPCraft Java Client API - provides native wrapper for
  * <a target=_ href="https://nlpcraft.apache.org/using-rest.html">REST APIs</a> for any JVM-based languages
  * like Java, Scala, Kotlin or Groovy.
+ * <p>
+ * <b>Usage</b><br>
+ * Java client usage is straightforward - create client instance using {@link org.apache.nlpcraft.client.NCClientBuilder} and use the
+ * client instance for all API calls:
+ * <pre class="brush: java">
+ *     // Get client instance with all defaults.
+ *     NCClient cli = new NCClientBuilder().build();
+ *
+ *     // Perform any necessary calls...
+ *     NCResult res = cli.askSync("my.model.id", txt);
+ *
+ *     // Close client &amp; sign out at the end.
+ *     cli.close();
+ * </pre>
  */
 package org.apache.nlpcraft.client;

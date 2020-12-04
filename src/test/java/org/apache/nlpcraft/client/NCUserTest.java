@@ -17,13 +17,14 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Optional;
 
+import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -31,12 +32,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * REST client test. Methods `user/*`.
  */
 class NCUserTest extends NCTestAdapter {
-    /** */
-    private static final String MDL_ID = "nlpcraft.alarm.ex";
-
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(AlarmModel.class);
+        return Optional.of(NCCommonSpecModel.class);
     }
 
     /**
@@ -172,7 +170,7 @@ class NCUserTest extends NCTestAdapter {
         String extId = "extId";
     
         // Implicitly creates user with external ID.
-        admCli.askSync(MDL_ID, "Ping me in 3 minutes", null, false, null, extId);
+        admCli.askSync(MDL_ID, "test", null, false, null, extId);
     
         NCUser newUser = get(admCli.getAllUsers(), (u) -> extId.equals(u.getExternalId()));
     
@@ -195,7 +193,7 @@ class NCUserTest extends NCTestAdapter {
         String extId = "extId";
     
         // Implicitly creates user with external ID.
-        admCli.askSync(MDL_ID, "Ping me in 3 minutes", null, false, null, extId);
+        admCli.askSync(MDL_ID, "test", null, false, null, extId);
     
         // Updates existing user with given external ID.
         admCli.addUser(

@@ -25,9 +25,6 @@ import com.google.gson.annotations.SerializedName;
 public class NCStatusResponseBean {
     @SerializedName("status") private String status;
 
-    /**
-     * Gets response status.
-     */
     public String getStatus() {
         return status;
     }

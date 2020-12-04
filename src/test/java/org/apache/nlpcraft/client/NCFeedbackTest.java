@@ -17,24 +17,22 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
+import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * REST client test. Methods `ask`.
  */
 class NCFeedbackTest extends NCTestAdapter {
-    /** */
-    private static final String MDL_ID = "nlpcraft.alarm.ex";
-
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(AlarmModel.class);
+        return Optional.of(NCCommonSpecModel.class);
     }
 
     /**
@@ -45,7 +43,7 @@ class NCFeedbackTest extends NCTestAdapter {
      */
     private void test0(Long usrId, String usrExtId) throws Exception {
         // Adds request.
-        String srvReqId = admCli.ask(MDL_ID, "Ping me in 3 minutes", null, false, usrId, usrExtId);
+        String srvReqId = admCli.ask(MDL_ID, "test", null, false, usrId, usrExtId);
     
         // Creates 2 feedback.
         long fId1 = admCli.addFeedback(srvReqId, 0.5, null, usrId, usrExtId);
@@ -64,7 +62,7 @@ class NCFeedbackTest extends NCTestAdapter {
     
         // Creates 2 feedback.
         admCli.addFeedback(srvReqId, 0.5, null, usrId, usrExtId);
-        admCli.addFeedback(srvReqId, 0.1, "Somme comment", usrId, usrExtId);
+        admCli.addFeedback(srvReqId, 0.1, "Some comment", usrId, usrExtId);
     
         // Checks their existing.
         assertEquals(2, admCli.getAllFeedback(null, usrId, usrExtId).size());

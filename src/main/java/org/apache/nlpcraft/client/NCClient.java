@@ -21,9 +21,9 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Java client API. Java REST client provides native and easy-to-use wrapper for NLPCraft
- * <a target=_ href="https://nlpcraft.apache.org/using-rest.html">REST APIs</a> for any JVM-based languages
- * like Java, Scala, Kotlin or Groovy. Note that NLPCraft REST APIs allow to submit the request to existing
+ * <b>Java client API</b> provides native JVM wrapper for NLPCraft
+ * <a target=_ href="https://nlpcraft.apache.org/using-rest.html">REST APIs</a>. Note that NLPCraft REST APIs allow to
+ * submit the request to existing
  * deployed data model and perform other related, auxiliary operations. To create data models you need to
  * use main <a target=_ href="https://nlpcraft.apache.org/apis/latest/index.html">NLPCraft APIs</a>.
  * <p>
@@ -49,7 +49,7 @@ import java.util.*;
  *     // Perform any necessary calls...
  *     NCResult res = cli.askSync("my.model.id", txt);
  *
- *     // Close client & sign out at the end.
+ *     // Close client &amp; sign out at the end.
  *     cli.close();
  * </pre>
  * 
@@ -542,6 +542,21 @@ public interface NCClient {
      * @throws IOException Thrown in case of generic I/O errors.
      */
     void deleteCompany() throws NCClientException, IOException;
+
+    /**
+     * Runs <a href="https://nlpcraft.apache.org/tools/syn_tool.html">synonym suggestion tool</a> for given model
+     * ID and minimal score.
+     *
+     * @param mdlId ID Of the model to run the tool for.
+     * @param minScore Minimum score to include into the result, ranging from 0 to 1, default is 0.
+     *      Score of 0 will include all results, and score of 1 will include only results with the absolutely highest
+     *      confidence score. Values between 0.5 and 0.7 is generally suggested.
+     * @return Suggestion data container.
+     * @throws NCClientException Thrown in case of client-specific errors.
+     * @throws IOException Thrown in case of generic I/O errors.
+     * @see <a href="https://nlpcraft.apache.org/tools/syn_tool.html">Synonym suggestion tool</a>.
+     */
+    NCSuggestionData suggestSynonyms(String mdlId, Double minScore)  throws NCClientException, IOException;
     
     /**
      * Closes the client and signs out from the REST server. Any further calls to this client will result in

@@ -15,17 +15,25 @@
  * limitations under the License.
  */
 
-package org.apache.nlpcraft.client.impl.beans;
-
-import com.google.gson.annotations.SerializedName;
+package org.apache.nlpcraft.client;
 
 /**
- * REST bean.
+ * Individual synonym suggestion returned from {@link NCSuggestionData#getSynonyms()} method.
+ *
+ * @see <a href="https://nlpcraft.apache.org/tools/syn_tool.html">Synonym suggestion tool</a>.
  */
-public class NCSigninBean extends NCStatusResponseBean  {
-    @SerializedName("acsTok") private String acsTok;
+public interface NCSuggestion {
+    /**
+     * Gets score of the suggested synonym.
+     *
+     * @return Score of the suggested synonym.
+     */
+    double getScore();
 
-    public String getAccessToken() {
-        return acsTok;
-    }
+    /**
+     * Gets synonym.
+     *
+     * @return A synonym.
+     */
+    String getSynonym();
 }

@@ -26,16 +26,9 @@ public class NCErrorMessageBean {
     @SerializedName("code") private String code;
     @SerializedName("msg") private String msg;
 
-    /**
-     * Gets error code.
-     */
     public String getCode() {
         return code;
     }
-
-    /**
-     * Gets error message.
-     */
     public String getMessage() {
         return msg;
     }

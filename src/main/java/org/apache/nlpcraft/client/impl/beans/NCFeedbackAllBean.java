@@ -27,9 +27,6 @@ import java.util.List;
 public class NCFeedbackAllBean extends NCStatusResponseBean  {
     @SerializedName("feedback") private List<NCFeedbackBean> feedback;
 
-    /**
-     * Gets the list of all feedback records.
-     */
     public List<NCFeedbackBean> getFeedback() {
         return feedback;
     }

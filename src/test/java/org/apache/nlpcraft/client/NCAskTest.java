@@ -17,7 +17,7 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -32,14 +33,11 @@ import static org.junit.jupiter.api.Assertions.fail;
  */
 class NCAskTest extends NCTestAdapter {
     /** */
-    private static final String MDL_ID = "nlpcraft.alarm.ex";
-    
-    /** */
     private static final int MAX_TEST_TIME = 20000;
 
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(AlarmModel.class);
+        return Optional.of(NCCommonSpecModel.class);
     }
 
     /**
@@ -85,7 +83,7 @@ class NCAskTest extends NCTestAdapter {
      */
     @Test
     void test() throws Exception {
-        test0("Ping me in 3 minutes", this::checkOk);
+        test0("test", this::checkOk);
         test0("El tiempo en España", this::checkError);
     }
 }

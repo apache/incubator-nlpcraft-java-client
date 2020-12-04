@@ -33,43 +33,28 @@ public class NCCompanyBean extends NCStatusResponseBean implements NCCompany {
     @SerializedName("address") private String address;
     @SerializedName("postalCode") private String postalCode;
     
-    @Override
-    public long getId() {
+    @Override public long getId() {
         return id;
     }
-    
-    @Override
-    public String getName() {
+    @Override public String getName() {
         return name;
     }
-    
-    @Override
-    public String getWebsite() {
+    @Override public String getWebsite() {
         return website;
     }
-    
-    @Override
-    public String getCountry() {
+    @Override public String getCountry() {
         return country;
     }
-    
-    @Override
-    public String getRegion() {
+    @Override public String getRegion() {
         return region;
     }
-    
-    @Override
-    public String getCity() {
+    @Override public String getCity() {
         return city;
     }
-    
-    @Override
-    public String getAddress() {
+    @Override public String getAddress() {
         return address;
     }
-    
-    @Override
-    public String getPostalCode() {
+    @Override public String getPostalCode() {
         return postalCode;
     }
 }

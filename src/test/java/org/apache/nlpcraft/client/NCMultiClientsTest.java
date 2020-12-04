@@ -18,8 +18,9 @@
 package org.apache.nlpcraft.client;
 
 import org.apache.http.client.config.RequestConfig;
-import org.apache.nlpcraft.examples.alarm.AlarmModel;
+import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -31,17 +32,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
+import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
 
 /**
  * REST client test. Methods `ask`.
  */
 class NCMultiClientsTest extends NCTestAdapter {
-    /** */
-    private static final String MDL_ID = "nlpcraft.alarm.ex";
-
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(AlarmModel.class);
+        return Optional.of(NCCommonSpecModel.class);
     }
 
     /**
@@ -63,7 +62,7 @@ class NCMultiClientsTest extends NCTestAdapter {
         long maxTime = System.currentTimeMillis() + testTimeMs;
     
         CountDownLatch cdl = new CountDownLatch(clientsCnt);
-        
+
         for (int i = 0; i < clientsCnt; i++) {
             int fi = i;
             
@@ -84,7 +83,7 @@ class NCMultiClientsTest extends NCTestAdapter {
                         while (System.currentTimeMillis() < maxTime && err.get() == null) {
                             client.ask(
                                 MDL_ID,
-                                "Ping me in 3 minutes",
+                                "test",
                                 null,
                                 false,
                                 null,
@@ -93,7 +92,7 @@ class NCMultiClientsTest extends NCTestAdapter {
     
                             System.out.println("Request sent [reqNum=" + cnt.incrementAndGet() + ", clientNum=" + fi + ']');
     
-                            Thread.sleep(rnd.nextInt(500) + 1);
+                            Thread.sleep(rnd.nextInt(400) + 100);
                         }
                     }
                     finally {
@@ -113,10 +112,15 @@ class NCMultiClientsTest extends NCTestAdapter {
         }
         
         cdl.await(timeoutMs * 2, MILLISECONDS);
-    
-        if (err.get() != null)
-            throw err.get();
-    
+
+        Throwable t = err.get();
+
+        if (t != null) {
+            t.printStackTrace();
+
+            Assertions.fail(t.getMessage());
+        }
+
         System.out.println("Clients count: " + clientsCnt);
         System.out.println("Processed requests: " + cnt.get());
     }

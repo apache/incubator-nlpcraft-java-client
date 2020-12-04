@@ -17,7 +17,7 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.examples.weather.WeatherModel;
+import org.apache.nlpcraft.client.models.NCConversationSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
@@ -27,15 +27,10 @@ import java.util.function.Consumer;
 /**
  * REST client test. Methods `clear/conversation`.
  */
-class NCConversationTest extends NCTestAdapter {
-    /**
-     *
-     */
-    private static final String MDL_ID = "nlpcraft.weather.ex";
-
+class NCClearConversationTest extends NCTestAdapter {
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(WeatherModel.class);
+        return Optional.of(NCConversationSpecModel.class);
     }
 
     /**
@@ -44,40 +39,37 @@ class NCConversationTest extends NCTestAdapter {
      * @throws Exception
      */
     private void check(String txt, Consumer<NCResult> resConsumer) throws Exception {
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, null, true, null, null));
+        resConsumer.accept(admCli.askSync(NCConversationSpecModel.MDL_ID, txt, null, true, null, null));
+    }
+
+    private void flow() throws Exception {
+        // missed 'test1'
+        check("test2", this::checkError);
+
+        check("test1 test2", this::checkOk);
+
+        // 'test1' received from conversation.
+        check("test2", this::checkOk);
     }
 
     /**
      * @throws Exception
      */
     @Test
-    void test1() throws Exception {
-        check("What's the weather in Moscow?", this::checkOk);
+    void test() throws Exception {
+        flow();
 
-        // Should be answered with conversation.
-        check("Moscow", this::checkOk);
-
-        admCli.clearConversation(MDL_ID, null, null);
-
-        // Cannot be answered without conversation.
-        check("Moscow", this::checkError);
-    }
-
-    /**
-     * @throws Exception
-     */
-    @Test
-    void test2() throws Exception {
-        check("What's the weather in Moscow?", this::checkOk);
-
-        // Should be answered with conversation.
-        check("Moscow", this::checkOk);
-
-        admCli.clearConversation(MDL_ID,
+        admCli.clearConversation(
+            NCConversationSpecModel.MDL_ID,
             // Finds its own ID.
-            get(admCli.getAllUsers(), (u) -> NCClientBuilder.DFLT_EMAIL.equals(u.getEmail())).getId(), null);
+            get(admCli.getAllUsers(), (u) -> NCClientBuilder.DFLT_EMAIL.equals(u.getEmail())).getId(),
+            null
+        );
 
-        // Cannot be answered without conversation.
-        check("Moscow", this::checkError);
+        flow();
+
+        admCli.clearConversation(NCConversationSpecModel.MDL_ID, null, null);
+
+        flow();
     }
 }

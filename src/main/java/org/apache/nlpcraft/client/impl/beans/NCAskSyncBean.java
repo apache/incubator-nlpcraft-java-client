@@ -25,9 +25,6 @@ import com.google.gson.annotations.SerializedName;
 public class NCAskSyncBean extends NCStatusResponseBean  {
     @SerializedName("state") private NCRequestStateBean state;
 
-    /**
-     * Gets request state.
-     */
     public NCRequestStateBean getState() {
         return state;
     }

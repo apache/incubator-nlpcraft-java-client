@@ -15,31 +15,45 @@
  * limitations under the License.
  */
 
-package org.apache.nlpcraft.client;
+package org.apache.nlpcraft.client.models;
 
-import org.apache.nlpcraft.client.models.NCCommonSpecModel;
+import org.apache.nlpcraft.model.NCElement;
 import org.apache.nlpcraft.model.NCModel;
-import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * REST client test. Methods `probe/*`.
+ * Test model adapter.
  */
-class NCProbesTest extends NCTestAdapter {
+abstract class NCSpecModelAdapter implements NCModel {
     @Override
-    Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(NCCommonSpecModel.class);
+    public String getName() {
+        return getId();
     }
 
-    /**
-     *
-     * @throws Exception
-     */
-    @Test
-    void test() throws Exception {
-        assertFalse(admCli.getProbes().isEmpty());
+    @Override
+    public String getVersion() {
+        return "1.0.0";
+    }
+
+    protected NCElement mkElement(String id, String... syns) {
+        return new NCElement() {
+            @Override
+            public String getId() {
+                return id;
+            }
+
+            @Override
+            public List<String> getSynonyms() {
+                List<String> l = new ArrayList<>();
+
+                l.add(id);
+                l.addAll(Arrays.asList(syns));
+
+                return l;
+            }
+        };
     }
 }

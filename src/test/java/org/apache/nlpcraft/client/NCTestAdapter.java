@@ -18,7 +18,7 @@
 package org.apache.nlpcraft.client;
 
 import org.apache.nlpcraft.model.NCModel;
-import org.apache.nlpcraft.probe.embedded.NCEmbeddedProbe;
+import org.apache.nlpcraft.model.tools.embedded.NCEmbeddedProbe;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -54,7 +54,7 @@ abstract class NCTestAdapter {
     protected long admUsrId;
 
     /** */
-    private final Optional<Class<? extends NCModel>> mdlOpt = getModelClass();
+    private Class<? extends NCModel> mdlClass;
 
     /**
      *
@@ -70,7 +70,10 @@ abstract class NCTestAdapter {
      */
     @BeforeEach
     void setUp() throws Exception {
-        mdlOpt.ifPresent(NCEmbeddedProbe::start);
+        mdlClass = getModelClass().orElse(null);
+
+        if (mdlClass != null)
+            NCEmbeddedProbe.start(mdlClass);
 
         admCli = new NCClientBuilder().build();
         
@@ -92,7 +95,7 @@ abstract class NCTestAdapter {
             admCli.close();
         }
 
-        if (mdlOpt.isPresent())
+        if (mdlClass != null)
             NCEmbeddedProbe.stop();
     }
     
@@ -163,8 +166,8 @@ abstract class NCTestAdapter {
     protected<T> T get(List<T> list, Predicate<T> p) {
         Optional<T> opt = getOpt(list, p);
     
-        if (!opt.isPresent())
-            fail("Object not found");
+        if (opt.isEmpty())
+            fail("Object not found in list: " + list);
     
         return opt.get();
     }
@@ -174,13 +177,11 @@ abstract class NCTestAdapter {
      * @param state
      */
     protected void checkOk(NCResult state) {
-        System.out.println(
-            String.format(
-                "Text: %s \ntype: %s\nresult: %s",
-                state.getText(),
-                state.getResultType(),
-                state.getResultBody()
-            )
+        System.out.printf(
+            "Text: %s \ntype: %s\nresult: %s%n",
+            state.getText(),
+            state.getResultType(),
+            state.getResultBody()
         );
     
         if (state.getLogHolder() != null)
@@ -199,13 +200,11 @@ abstract class NCTestAdapter {
     protected void checkError(NCResult state) {
         assert state != null;
         
-        System.out.println(
-            String.format(
-                "Text: %s \nerror: %s\ncode: %d",
-                state.getText(),
-                state.getErrorMessage(),
-                state.getErrorCode()
-            )
+        System.out.printf(
+            "Text: %s \nerror: %s\ncode: %d%n",
+            state.getText(),
+            state.getErrorMessage(),
+            state.getErrorCode()
         );
     
         if (state.getLogHolder() != null)

@@ -25,9 +25,6 @@ import com.google.gson.annotations.SerializedName;
 public class NCCompanyTokenResetBean extends NCStatusResponseBean  {
     @SerializedName("token") private String token;
 
-    /**
-     * Gets new company token.
-     */
     public String getToken() {
         return token;
     }

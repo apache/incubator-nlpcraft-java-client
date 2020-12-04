@@ -21,6 +21,7 @@ import com.google.gson.annotations.SerializedName;
 import org.apache.nlpcraft.client.NCModel;
 import org.apache.nlpcraft.client.NCProbe;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -48,98 +49,23 @@ public class NCProbeBean implements NCProbe {
     @SerializedName("macAddr") private String macAddr;
     @SerializedName("models") private Set<NCModelBean> models;
     
-    @Override
-    public String getProbeToken() {
-        return probeToken;
-    }
-    
-    @Override
-    public String getId() {
-        return id;
-    }
-    
-    @Override
-    public String getProbeGuid() {
-        return probeGuid;
-    }
-    
-    @Override
-    public String getProbeApiVersion() {
-        return probeApiVersion;
-    }
-    
-    @Override
-    public String getProbeApiDate() {
-        return probeApiDate;
-    }
-    
-    @Override
-    public String getOsVersion() {
-        return osVersion;
-    }
-    
-    @Override
-    public String getOsName() {
-        return osName;
-    }
-    
-    @Override
-    public String getOsArchitecture() {
-        return osArch;
-    }
-    
-    @Override
-    public long getStartTimestamp() {
-        return startTstamp;
-    }
-    
-    @Override
-    public String getTimezoneId() {
-        return tmzId;
-    }
-    
-    @Override
-    public String getTimezoneAbbreviation() {
-        return tmzAbbr;
-    }
-    
-    @Override
-    public String getTimezoneName() {
-        return tmzName;
-    }
-    
-    @Override
-    public String getUserName() {
-        return userName;
-    }
-    
-    @Override
-    public String getJavaVersion() {
-        return javaVersion;
-    }
-    
-    @Override
-    public String getJavaVendor() {
-        return javaVendor;
-    }
-    
-    @Override
-    public String getHostName() {
-        return hostName;
-    }
-    
-    @Override
-    public String getHostAddress() {
-        return hostAddr;
-    }
-    
-    @Override
-    public String getMacAddress() {
-        return macAddr;
-    }
-    
-    @Override
-    public Set<NCModel> getModels() {
-        return new HashSet<>(models);
-    }
+    @Override public String getProbeToken() { return probeToken; }
+    @Override public String getId() { return id; }
+    @Override public String getProbeGuid() { return probeGuid; }
+    @Override public String getProbeApiVersion() { return probeApiVersion; }
+    @Override public String getProbeApiDate() { return probeApiDate; }
+    @Override public String getOsVersion() { return osVersion; }
+    @Override public String getOsName() { return osName; }
+    @Override public String getOsArchitecture() { return osArch; }
+    @Override public long getStartTimestamp() { return startTstamp; }
+    @Override public String getTimezoneId() { return tmzId; }
+    @Override public String getTimezoneAbbreviation() { return tmzAbbr; }
+    @Override public String getTimezoneName() { return tmzName; }
+    @Override public String getUserName() { return userName; }
+    @Override public String getJavaVersion() { return javaVersion; }
+    @Override public String getJavaVendor() { return javaVendor; }
+    @Override public String getHostName() { return hostName; }
+    @Override public String getHostAddress() { return hostAddr; }
+    @Override public String getMacAddress() { return macAddr; }
+    @Override public Set<NCModel> getModels() { return models != null ? new HashSet<>(models) : Collections.emptySet(); }
 }

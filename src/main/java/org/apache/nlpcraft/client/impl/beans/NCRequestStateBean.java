@@ -21,7 +21,6 @@ import org.apache.nlpcraft.client.NCResult;
 
 /**
  * REST bean.
- * TODO: doc
  */
 public class NCRequestStateBean implements NCResult {
     private String srvReqId;
@@ -36,101 +35,70 @@ public class NCRequestStateBean implements NCResult {
     private String error;
     private String logHolder;
     
-    @Override
-    public String getServerRequestId() {
+    @Override public String getServerRequestId() {
         return srvReqId;
     }
-    
-    @Override
-    public String getText() {
-        return txt;
-    }
-    
-    @Override
-    public long getUserId() {
-        return usrId;
-    }
-    
-    @Override
-    public String getModelId() {
-        return mdlId;
-    }
-    
-    @Override
-    public String getProbeId() {
-        return probeId;
-    }
-    
-    @Override
-    public String getResultType() {
-        return resType;
-    }
-    
-    @Override
-    public String getResultBody() {
-        return resBody;
-    }
-    
-    @Override
-    public boolean isReady() {
-        return "QRY_READY".equals(status);
-    }
-    
-    @Override
-    public Integer getErrorCode() {
-        return errorCode;
-    }
-    
-    @Override
-    public String getErrorMessage() {
-        return error;
-    }
-    
-    @Override
-    public String getLogHolder() {
+    @Override public String getText() {
+    return txt;
+}
+    @Override public long getUserId() {
+    return usrId;
+}
+    @Override public String getModelId() {
+    return mdlId;
+}
+    @Override public String getProbeId() {
+    return probeId;
+}
+    @Override public String getResultType() {
+    return resType;
+}
+    @Override public String getResultBody() {
+    return resBody;
+}
+    @Override public boolean isReady() {
+    return "QRY_READY".equals(status);
+}
+    @Override public Integer getErrorCode() {
+    return errorCode;
+}
+    @Override public String getErrorMessage() {
+    return error;
+}
+    @Override public String getLogHolder() {
         return logHolder;
     }
     
     public void setSrvReqId(String srvReqId) {
         this.srvReqId = srvReqId;
     }
-    
     public void setTxt(String txt) {
         this.txt = txt;
     }
-    
     public void setUsrId(long usrId) {
         this.usrId = usrId;
     }
-    
     public void setMdlId(String mdlId) {
         this.mdlId = mdlId;
     }
-    
     public void setProbeId(String probeId) {
         this.probeId = probeId;
     }
-    
     public void setResType(String resType) {
         this.resType = resType;
     }
-    
     public void setResBody(String resBody) {
         this.resBody = resBody;
     }
-    
     public void setStatus(String status) {
         this.status = status;
     }
-    
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
     }
-    
     public void setError(String error) {
         this.error = error;
     }
-    
     public void setLogHolder(String logHolder) {
         this.logHolder = logHolder;
     }

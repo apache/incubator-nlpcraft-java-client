@@ -18,14 +18,19 @@
 package org.apache.nlpcraft.client.impl.beans;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.nlpcraft.client.NCSuggestion;
 
 /**
  * REST bean.
  */
-public class NCSigninBean extends NCStatusResponseBean  {
-    @SerializedName("acsTok") private String acsTok;
+public class NCSuggestionBean implements NCSuggestion {
+    @SerializedName("score") private double score;
+    @SerializedName("synonym") private String synonym;
 
-    public String getAccessToken() {
-        return acsTok;
+    @Override public double getScore() {
+        return score;
+    }
+    @Override public String getSynonym() {
+        return synonym;
     }
 }

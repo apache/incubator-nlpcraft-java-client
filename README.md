@@ -25,8 +25,7 @@
 
 ## What is Apache NLPCraft?
 [Apache NLPCraft](https://nlpcraft.apache.org/) is an open source library for adding a natural language interface to any applications. 
-NLPCraft is free and developer friendly, it securely works with any private data source, and has no hardware or software 
-lock-in.
+Based on semantic modelling it allows rapid implementation and requires no model training or pre-existing text corpora.
 
 ## Java Client
 Native Java client provide easy-to-use Java-based API that wraps standard NLPCraft [REST APIs](https://nlpcraft.apache.org/using-rest.html). 
@@ -42,7 +41,6 @@ For any questions, feedback or suggestions:
  
 ## Other Projects
 - [Apache NLPCraft](https://github.com/apache/incubator-nlpcraft) - Main NLPCraft project.
-- [Apache NLPCraft UI](https://github.com/apache/incubator-nlpcraft-ui) - Web UI for testing and debugging.
 
 ## Usage
 From any JVM-based application code:

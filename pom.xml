@@ -24,30 +24,30 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <apache.httpcomponents.ver>4.5.7</apache.httpcomponents.ver>
-        <apache.common.lang.ver>3.8.1</apache.common.lang.ver>
-        <commons.validator.ver>1.6</commons.validator.ver>
-        <gson.ver>2.8.5</gson.ver>
-        <log4j.ver>2.11.2</log4j.ver>
-        <nlpcraft.ver>0.5.0</nlpcraft.ver>
-        <junit.ver>5.4.0</junit.ver>
-        <maven.compiler.version>3.7.0</maven.compiler.version>
-        <maven.exec.version>1.6.0</maven.exec.version>
-        <maven.shade.plugin.ver>3.1.0</maven.shade.plugin.ver>
+        <apache.httpcomponents.ver>4.5.13</apache.httpcomponents.ver>
+        <apache.common.lang.ver>3.11</apache.common.lang.ver>
+        <commons.validator.ver>1.7</commons.validator.ver>
+        <gson.ver>2.8.6</gson.ver>
+        <log4j.ver>2.14.0</log4j.ver>
+        <nlpcraft.ver>0.7.2</nlpcraft.ver>
+        <junit.ver>5.7.0</junit.ver>
+        <maven.compiler.version>3.8.0</maven.compiler.version>
+        <maven.shade.plugin.ver>3.2.4</maven.shade.plugin.ver>
         <maven.source.plugin.ver>3.0.1</maven.source.plugin.ver>
         <maven.gpg.plugin.ver>1.6</maven.gpg.plugin.ver>
         <maven.enforcer.plugin.ver>1.4.1</maven.enforcer.plugin.ver>
-        <maven.surefire.plugin.ver>2.22.1</maven.surefire.plugin.ver>
+        <maven.surefire.plugin.ver>2.22.2</maven.surefire.plugin.ver>
         <maven.javadoc.plugin.ver>3.2.0</maven.javadoc.plugin.ver>
-        <maven.jar.plugin.ver>3.1.1</maven.jar.plugin.ver>
+        <maven.jar.plugin.ver>3.2.0</maven.jar.plugin.ver>
         <apache.rat.plugin.ver>0.13</apache.rat.plugin.ver>
         <maven.bazaarvoice.plugin.ver>0.9</maven.bazaarvoice.plugin.ver>
+        <maven.clean.plugin.ver>3.1.0</maven.clean.plugin.ver>
     </properties>
 
     <name>NLPCraft - Java Client</name>
     <groupId>org.apache.nlpcraft</groupId>
     <artifactId>java-client</artifactId>
-    <version>0.5.0</version>
+    <version>0.7.2</version>
     <url>https://nlpcraft.apache.org</url>
     <description>An open source API to convert natural language into actions.</description>
 
@@ -84,7 +84,7 @@
         <connection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</developerConnection>
         <!-- Set actual tag name here -->
-        <tag>v0.5.0</tag>
+        <tag>v0.7.2</tag>
     </scm>
 
     <dependencies>
@@ -135,12 +135,28 @@
     <build>
         <plugins>
             <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven.clean.plugin.ver}</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${user.home}/.nlpcraft</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -151,12 +167,15 @@
                     <rules>
                         <requireJavaVersion>
                             <message>
-                                [INFO] ------------------------------------------------------------------------
-                                [ERROR] You are trying to compile NLPCraft with inappropriate JDK version!
-                                [ERROR] Detected JDK Version: ${java.runtime.version}
-                                [ERROR] JDK version should be &gt;= 1.8.0_1.
+
+                                ------------------------------------------------------------------------
+                                You are trying to compile NLPCraft with inappropriate JDK version!
+                                Detected JDK Version: ${java.runtime.version}
+                                JDK version should be 11 or later
+                                ------------------------------------------------------------------------
+
                             </message>
-                            <version>1.8,11</version>
+                            <version>11</version>
                         </requireJavaVersion>
                     </rules>
                 </configuration>
@@ -173,8 +192,6 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>${maven.javadoc.plugin.ver}</version>
                 <configuration>
-                    <source>1.8</source>
-                    <!-- Required as of JDK 8u121 -->
                     <additionalOptions>--allow-script-in-comments, -Xdoclint:none</additionalOptions>
                     <javadocDirectory>${project.basedir}/javadoc</javadocDirectory>
                     <docfilessubdirs>true</docfilessubdirs>
@@ -202,13 +219,14 @@
                             <link href="{@docRoot}/resources/sh/styles/shCoreNlpCraft.css" rel="stylesheet" type="text/css" title="Style">
                             <link href="{@docRoot}/resources/sh/styles/shThemeNlpCraft.css" rel="stylesheet" type="text/css" title="Style">
                             <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+                            <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
                             <script async defer src="https://buttons.github.io/buttons.js"></script>
                         ]]>
                     </top>
                     <!-- Disabled because of https://bugs.openjdk.java.net/browse/JDK-8193030 -->
                     <!-- <subpackages>org.apache.nlpcraft.client</subpackages> -->
                     <excludePackageNames>
-                        org.apache.nlpcraft.client.impl
+                        org.apache.nlpcraft.client.impl:org.apache.nlpcraft.client.impl.beans
                     </excludePackageNames>
                     <groups>
                         <group>
@@ -250,7 +268,7 @@
                     </footer>
                     <doctitle>
                         <![CDATA[
-                            Apache NLPCraft - Java Client API <span style="font-size: 80%">${project.version}</span>
+                            <img style="margin-top: 15px" src="https://nlpcraft.apache.org/images/nlpcraft_logo_darkblue.png" height="54px">
                         ]]>
                     </doctitle>
                     <windowtitle>Apache NLPCraft - Java Client ${project.version}</windowtitle>
@@ -324,13 +342,27 @@
                             <goal>start</goal>
                         </goals>
                         <configuration>
+                            <!--
+                                Depending on the console config and how maven is run this will produce the output with ANSI colors.
+                                To strip out ANSI escape sequences from the log file, see the following:
+                                https://stackoverflow.com/questions/17998978/removing-colors-from-output
+                            -->
                             <name>server</name>
                             <healthcheckUrl>http://localhost:8081/api/v1/health</healthcheckUrl>
-                            <waitAfterLaunch>180</waitAfterLaunch>
+                            <waitAfterLaunch>600</waitAfterLaunch>
                             <arguments>
                                 <argument>java</argument>
                                 <argument>-Xmx4G</argument>
                                 <argument>-Xms4G</argument>
+                                <argument>--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED</argument>
+                                <argument>--add-exports=java.base/sun.nio.ch=ALL-UNNAMED</argument>
+                                <argument>--add-exports=java.management/com.sun.jmx.mbeanserver=ALL-UNNAMED</argument>
+                                <argument>--add-exports=jdk.internal.jvmstat/sun.jvmstat.monitor=ALL-UNNAMED</argument>
+                                <argument>--add-exports=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED</argument>
+                                <argument>--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED</argument>
+                                <argument>--illegal-access=permit</argument>
+                                <argument>-DNLPCRAFT_ANSI_COLOR_DISABLED=true</argument> <!-- Remove ANSI at least from NLPCraft output. -->
+                                <argument>-Djdk.tls.client.protocols=TLSv1.2</argument>
                                 <argument>-cp</argument>
                                 <argument>${project.build.directory}/server-lib/*</argument>
                                 <argument>org.apache.nlpcraft.server.NCServer</argument>
@@ -371,6 +403,15 @@
                             <includes>
                                 <include>**/*.*</include>
                             </includes>
+                            <excludes>
+                                <!--
+                                    Some tests skipped on maven `verify` phase.
+                                    ===========================================
+                                -->
+                                <!-- Reason: 'contextWordServer' should be started. -->
+                                <exclude>**/NCModelTest.*</exclude>
+                            </excludes>
+
                         </configuration>
                     </execution>
                 </executions>

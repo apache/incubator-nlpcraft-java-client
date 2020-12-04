@@ -17,54 +17,65 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.client.models.NCCommonSpecModel;
+import org.apache.nlpcraft.client.models.NCDialogSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
-
 /**
- * REST client test. Method `ask/sync`.
+ * REST client test. Methods `clear/dialog`.
  */
-class NCAskSyncTest extends NCTestAdapter {
+class NCClearDialogTest extends NCTestAdapter {
     @Override
     Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(NCCommonSpecModel.class);
+        return Optional.of(NCDialogSpecModel.class);
+    }
+
+    /**
+     * @param txt
+     * @param resConsumer
+     * @throws Exception
+     */
+    private void check(String txt, Consumer<NCResult> resConsumer) throws Exception {
+        resConsumer.accept(admCli.askSync(NCDialogSpecModel.MDL_ID, txt, null, true, null, null));
     }
 
     /**
      *
-     * @param txt
      * @throws Exception
      */
-    private void check(String txt, Consumer<NCResult> resConsumer) throws Exception {
-        // Different combinations of input parameters.
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, null, true, null, null));
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, "{\"a\": 1}", true, null, null));
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, "data", false, null, null));
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, "data", false, admUsrId, null));
-        
-        String extId = "extId";
-    
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, "data", false, null, extId));
-    
-        long id = get(admCli.getAllUsers(), (u) -> extId.equals(u.getExternalId())).getId();
-    
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, "data", false, id, extId));
+    private void flow() throws Exception {
+        // There isn't `test1` before.
+        check("test2", this::checkError);
+
+        // `test1` is always ok.
+        check("test1", this::checkOk);
+
+        // There is one `test1` before.
+        check("test2", this::checkOk);
+
+        // `test1` is always ok.
+        check("test1", this::checkOk);
+        check("test1", this::checkOk);
+
+        // There are too much `test1` before.
+        // TODO:
+        //check("test2", this::checkError);
     }
-    
+
     /**
      *
      * @throws Exception
      */
     @Test
     void test() throws Exception {
-        // Only latin charset is supported.
-        check("El tiempo en España", this::checkError);
-    
-        check("test", this::checkOk);
+        flow();
+
+        admCli.clearDialog(NCDialogSpecModel.MDL_ID, null, null);
+        admCli.clearConversation(NCDialogSpecModel.MDL_ID, null, null);
+
+        flow();
     }
 }

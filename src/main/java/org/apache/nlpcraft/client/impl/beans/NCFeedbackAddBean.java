@@ -25,9 +25,6 @@ import com.google.gson.annotations.SerializedName;
 public class NCFeedbackAddBean extends NCStatusResponseBean  {
     @SerializedName("id") private Long id;
 
-    /**
-     * ID of the newly added feedback record.
-     */
     public Long getId() {
         return id;
     }
