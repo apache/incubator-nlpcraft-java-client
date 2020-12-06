@@ -18,7 +18,7 @@
 
 if [[ $1 = "" ]] ; then
     echo "Version must be set as input parameter."
-    exit -1
+    exit 1
 fi
 
 #
@@ -35,7 +35,7 @@ curDir=$(pwd)
 
 cd ../
 
-mvn clean package -Prelease
+mvn clean package -P release
 
 rm -R ${zipDir} 2> /dev/null
 
@@ -50,7 +50,7 @@ cp bindist/NOTICE ${zipDir}/${tmpDir}
 cp DISCLAIMER ${zipDir}/${tmpDir}
 cp src/main/resources/log4j2.xml ${zipDir}/${tmpDir}/build
 
-cp target/*all-deps.jar ${zipDir}/${tmpDir}/build
+cp target/*$1.jar ${zipDir}/${tmpDir}/build
 rsync -avzq target/apidocs/** ${zipDir}/${tmpDir}/javadoc --exclude '**/.DS_Store'
 
 # Prepares bin zip.
@@ -68,6 +68,8 @@ cp NOTICE ${zipDir}/${tmpDir}
 cp pom.xml ${zipDir}/${tmpDir}
 cp assembly.xml ${zipDir}/${tmpDir}
 cp README.md ${zipDir}/${tmpDir}
+mkdir ${zipDir}/${tmpDir}/javadoc
+cp javadoc/stylesheet.css ${zipDir}/${tmpDir}/javadoc
 
 # Prepares src zip.
 cd ${zipDir}
@@ -86,4 +88,4 @@ sign "${zipFileSrc}"
 cd ${curDir}
 
 echo
-echo "Files prepared in folder: ${zipDir}"
+echo "ZIPs are prepared in folder: ${zipDir}"
