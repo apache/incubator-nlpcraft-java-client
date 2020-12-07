@@ -24,7 +24,7 @@ fi
 #
 # Change this for your local GPG fingerprint:
 # ===========================================
-localUser=223A2AADD175994F4450467491D161EDD8405C82
+localUser=79BB50129889A04C68BD7A4ABCD48C7B6C94ED02
 
 zipDir=zips
 tmpDir=apache-nlpcraft-java-client
