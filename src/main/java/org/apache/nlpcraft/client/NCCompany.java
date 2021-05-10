@@ -17,6 +17,8 @@
 
 package org.apache.nlpcraft.client;
 
+import java.util.Map;
+
 /**
  * Company descriptor.
  *
@@ -78,4 +80,12 @@ public interface NCCompany {
      * @return Optional postal code of the company.
      */
     String getPostalCode();
+
+    /**
+     * TODO:
+     * Gets properties.
+     *
+     * @return Optional properties.
+     */
+    Map<String, String> getProperties();
 }

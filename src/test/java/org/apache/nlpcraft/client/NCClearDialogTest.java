@@ -61,8 +61,7 @@ class NCClearDialogTest extends NCTestAdapter {
         check("test1", this::checkOk);
 
         // There are too much `test1` before.
-        // TODO:
-        //check("test2", this::checkError);
+        check("test2", this::checkError);
     }
 
     /**

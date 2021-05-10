@@ -41,7 +41,7 @@ public class NCConversationSpecModel extends NCSpecModelAdapter {
     }
 
     // 'test1' is mandatory, 'test2' is optional.
-    @NCIntent("intent=intentId term~{id == 'test1'} term~{id == 'test2'}?")
+    @NCIntent("intent=intentId term~{tok_id() == 'test1'} term~{tok_id() == 'test2'}?")
     public org.apache.nlpcraft.model.NCResult onTest() {
         return org.apache.nlpcraft.model.NCResult.text("OK");
     }

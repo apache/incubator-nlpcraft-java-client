@@ -39,7 +39,7 @@ public class NCCommonSpecModel extends NCSpecModelAdapter {
         return Collections.singleton(mkElement("test"));
     }
 
-    @NCIntent("intent=intentId term~{id == 'test'}")
+    @NCIntent("intent=intentId term~{tok_id() == 'test'}")
     public org.apache.nlpcraft.model.NCResult onTest() {
         return org.apache.nlpcraft.model.NCResult.text("OK");
     }

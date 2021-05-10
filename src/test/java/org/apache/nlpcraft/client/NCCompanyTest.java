@@ -19,6 +19,8 @@ package org.apache.nlpcraft.client;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,6 +39,7 @@ class NCCompanyTest extends NCTestAdapter {
      * @param city
      * @param address
      * @param postalCode
+     * @param props
      */
     private static void check(
         NCCompany comp,
@@ -46,7 +49,8 @@ class NCCompanyTest extends NCTestAdapter {
         String region,
         String city,
         String address,
-        String postalCode
+        String postalCode,
+        Map<String, String> props
     ) {
         assertEquals(comp.getName(), name);
         assertEquals(comp.getWebsite(), website);
@@ -55,15 +59,17 @@ class NCCompanyTest extends NCTestAdapter {
         assertEquals(comp.getCity(), city);
         assertEquals(comp.getAddress(), address);
         assertEquals(comp.getPostalCode(), postalCode);
+        assertEquals(comp.getProperties(), props);
     }
     
     /**
      *
      * @param name
+     * @param props
      * @param other
      * @throws Exception
      */
-    private void test0(String name, String other) throws Exception {
+    private void test0(String name, Map<String, String> props, String other) throws Exception {
         String adminEmail = "test@" + UUID.randomUUID() + ".com";
         String adminPwd = "test";
     
@@ -79,7 +85,8 @@ class NCCompanyTest extends NCTestAdapter {
                 other, adminEmail, adminPwd,
                 "test",
                 "test",
-                null
+                null,
+                props
             );
     
         // Prepares client for this company.
@@ -90,25 +97,29 @@ class NCCompanyTest extends NCTestAdapter {
             get(newCompClient.getAllUsers(), (u) -> data.getAdminUserId() == u.getId());
     
             // Checks created company fields.
-            check(newCompClient.getCompany(), name, other, other, other, other, other, other);
+            check(newCompClient.getCompany(), name, other, other, other, other, other, other, props);
     
             name = "new " + name;
             other = "new " + other;
+
+            if (props != null) {
+                props.put("new", "new");
+            }
     
             // Updates fields.
-            newCompClient.updateCompany(name, other, other, other, other, other, other);
+            newCompClient.updateCompany(name, other, other, other, other, other, other, props);
     
             // Checks updates company fields.
-            check(newCompClient.getCompany(), name, other, other, other, other, other, other);
+            check(newCompClient.getCompany(), name, other, other, other, other, other, other, props);
     
             // Updates fields.
             newCompClient.updateCompany(
-                name, null, null, null, null, null, null
+                name, null, null, null, null, null, null, null
             );
     
             // Checks updates company fields.
             check(
-                newCompClient.getCompany(), name, null, null, null, null, null, null
+                newCompClient.getCompany(), name, null, null, null, null, null, null, null
             );
     
             // Checks method.
@@ -126,7 +137,11 @@ class NCCompanyTest extends NCTestAdapter {
      */
     @Test
     void test() throws Exception {
-        test0("company", "company");
-        test0("company", null);
+        Map<String, String> props = new HashMap<>();
+
+        props.put("k1", "v1");
+
+        test0("company", props, "company");
+        test0("company", null, null);
     }
 }

@@ -22,6 +22,7 @@ import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.apache.nlpcraft.client.models.NCCommonSpecModel.MDL_ID;
@@ -46,6 +47,7 @@ class NCUserTest extends NCTestAdapter {
      * @param avatar
      * @param isAdmin
      * @param extId
+     * @param props
      */
     private static void check(
         NCUser u,
@@ -54,7 +56,8 @@ class NCUserTest extends NCTestAdapter {
         String lastName,
         String avatar,
         boolean isAdmin,
-        String extId
+        String extId,
+        Map<String, String> props
     ) {
         assertEquals(u.getEmail(), email);
         assertEquals(u.getFirstName(), firstName);
@@ -62,6 +65,7 @@ class NCUserTest extends NCTestAdapter {
         assertEquals(u.getAvatarUrl(), avatar);
         assertEquals(u.isAdmin(), isAdmin);
         assertEquals(u.getExternalId(), extId);
+        assertEquals(u.getProperties(), props);
     }
     
     /**
@@ -72,7 +76,7 @@ class NCUserTest extends NCTestAdapter {
     private static void check(NCUser u1, NCUser u2) {
         assertEquals(u1.getId(), u2.getId());
         
-        check(u1, u2.getEmail(), u2.getFirstName(), u2.getLastName(), u2.getAvatarUrl(), u2.isAdmin(), u2.getExternalId());
+        check(u1, u2.getEmail(), u2.getFirstName(), u2.getLastName(), u2.getAvatarUrl(), u2.isAdmin(), u2.getExternalId(), u2.getProperties());
     }
     
     /**
@@ -90,7 +94,7 @@ class NCUserTest extends NCTestAdapter {
         
         NCUser user = get(users, (u) -> usrId1 == u.getId());
         
-        check(user, "email1@test.com", "first1", "last1", null, true, null);
+        check(user, "email1@test.com", "first1", "last1", null, true, null, null);
         
         admCli.resetUserPassword(usrId1, "pswd2");
         admCli.updateUserAdmin(usrId1, false);
@@ -100,7 +104,7 @@ class NCUserTest extends NCTestAdapter {
     
         user = get(users, (u) -> usrId1 == u.getId());
         
-        check(user, "email1@test.com", "first2", "last2", "av2", false, null);
+        check(user, "email1@test.com", "first2", "last2", "av2", false, null, null);
     
         admCli.deleteUser(usrId1, null);
     
@@ -117,7 +121,7 @@ class NCUserTest extends NCTestAdapter {
     
         user = get(users, (u) -> usrId2 == u.getId());
     
-        check(user, "email1@test.com", "first1", "last1", "av1", false, null);
+        check(user, "email1@test.com", "first1", "last1", "av1", false, null, null);
     
         admCli.deleteUser(usrId2, null);
     

@@ -20,6 +20,8 @@ package org.apache.nlpcraft.client.impl.beans;
 import com.google.gson.annotations.SerializedName;
 import org.apache.nlpcraft.client.NCCompany;
 
+import java.util.Map;
+
 /**
  * REST bean.
  */
@@ -32,6 +34,7 @@ public class NCCompanyBean extends NCStatusResponseBean implements NCCompany {
     @SerializedName("city") private String city;
     @SerializedName("address") private String address;
     @SerializedName("postalCode") private String postalCode;
+    @SerializedName("properties") private Map<String, String> properties;
     
     @Override public long getId() {
         return id;
@@ -56,5 +59,8 @@ public class NCCompanyBean extends NCStatusResponseBean implements NCCompany {
     }
     @Override public String getPostalCode() {
         return postalCode;
+    }
+    @Override public Map<String, String> getProperties() {
+        return properties;
     }
 }

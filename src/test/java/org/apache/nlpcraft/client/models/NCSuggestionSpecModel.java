@@ -41,7 +41,7 @@ public class NCSuggestionSpecModel extends NCSpecModelAdapter {
     }
 
     @NCIntentSample({"Tests passed well"})
-    @NCIntent("intent=intentId term~{id == 'test'}")
+    @NCIntent("intent=intentId term~{tok_id() == 'test'}")
     public org.apache.nlpcraft.model.NCResult onTest() {
         return org.apache.nlpcraft.model.NCResult.text("OK");
     }

@@ -29,7 +29,7 @@
         <commons.validator.ver>1.7</commons.validator.ver>
         <gson.ver>2.8.6</gson.ver>
         <log4j.ver>2.14.0</log4j.ver>
-        <nlpcraft.ver>0.7.2</nlpcraft.ver>
+        <nlpcraft.ver>0.7.5</nlpcraft.ver>
         <junit.ver>5.7.0</junit.ver>
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <maven.shade.plugin.ver>3.2.4</maven.shade.plugin.ver>

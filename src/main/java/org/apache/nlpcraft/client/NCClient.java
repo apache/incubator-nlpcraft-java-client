@@ -334,18 +334,18 @@ public interface NCClient {
      *
      * @param mdlId ID of the model to submit the request to.
      * @param txt Text to process.
-     * @param data Optional JSON data payload.
+     * @param data Optional JSON data payload. TODO:
      * @param enableLog Whether or not to enable processing log collection.
      * @param usrId Optional user ID.
      * @param usrExtId Optional external "on-behalf-of" user ID.
      * @return Server request ID of the submitted request.
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
-     * @see #askSync(String, String, String, boolean, Long, String) 
+     * @see #askSync(String, String, Map, boolean, Long, String)
      * @see #askSync(String, String) 
      * @see #ask(String, String) 
      */
-    String ask(String mdlId, String txt, String data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException;
+    String ask(String mdlId, String txt, Map<String, Object> data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException;
 
     /**
      * Submits request for asynchronous processing. This is a shortcut call that is equivalent to:
@@ -386,22 +386,10 @@ public interface NCClient {
      * @throws IOException Thrown in case of generic I/O errors.
      * @see #askSync(String, String)
      * @see #ask(String, String)
-     * @see #ask(String, String, String, boolean, Long, String) 
+     * @see #ask(String, String, Map, boolean, Long, String)
      */
-    NCResult askSync(String mdlId, String txt, String data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException;
+    NCResult askSync(String mdlId, String txt, Map<String, Object> data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException;
 
-    /**
-     * Submits request for synchronous processing. This is a shortcut call that is equivalent to:
-     * <pre class="brush: java">
-     *     askSync(mdlId, txt, null, false, null, null);
-     * </pre>
-     *
-     * @param mdlId ID of the model to submit the request to.
-     * @param txt Text to process.
-     * @return Query processing result.
-     * @throws NCClientException Thrown in case of client-specific errors.
-     * @throws IOException Thrown in case of generic I/O errors.
-     */
     default NCResult askSync(String mdlId, String txt) throws NCClientException, IOException {
         return askSync(mdlId, txt, null, false, null, null);
     }
@@ -488,7 +476,8 @@ public interface NCClient {
         String adminPasswd,
         String adminFirstName,
         String adminLastName,
-        String adminAvatarUrl
+        String adminAvatarUrl,
+        Map<String, String> props // TODO:
     ) throws NCClientException, IOException;
 
     /**
@@ -522,7 +511,8 @@ public interface NCClient {
         String region,
         String city,
         String address,
-        String postalCode
+        String postalCode,
+        Map<String, String> props // TODO:
     ) throws NCClientException, IOException;
 
     /**

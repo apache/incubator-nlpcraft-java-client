@@ -662,13 +662,12 @@ public class NCClientImpl implements NCClient {
     
         started = false;
     }
-    
+
     @Override
-    public String ask(String mdlId, String txt, String data, boolean enableLog, Long usrId, String usrExtId)
-        throws NCClientException, IOException {
+    public String ask(String mdlId, String txt, Map<String, Object> data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException {
         notNull(mdlId, "mdlId");
         notNull(txt, "txt");
-        
+
         NCAskBean b =
             checkAndExtract(
                 post(
@@ -683,88 +682,86 @@ public class NCClientImpl implements NCClient {
                 ),
                 NCAskBean.class
             );
-        
+
         return b.getServerRequestId();
     }
-    
+
     @Override
-    public NCResult askSync(
-        String mdlId, String txt, String data, boolean enableLog, Long usrId, String usrExtId
-    ) throws NCClientException, IOException {
+    public NCResult askSync(String mdlId, String txt, Map<String, Object> data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException {
         notNull(mdlId, "mdlId");
         notNull(txt, "txt");
-        
+
         if (embeddedProbe) {
             String srvReqId = ask(mdlId, txt, data, enableLog, usrId, usrExtId);
             int timeout = reqCfg.getSocketTimeout();
             long maxTime = System.currentTimeMillis() + timeout;
-    
+
             while (true) {
                 NCEmbeddedResult res = embeddedResMap.get(srvReqId);
-        
+
                 if (res != null)
                     return new NCResult() {
                         @Override
                         public String getServerRequestId() {
                             return res.getServerRequestId();
                         }
-    
+
                         @Override
                         public String getText() {
                             return res.getOriginalText();
                         }
-    
+
                         @Override
                         public long getUserId() {
                             return res.getUserId();
                         }
-    
+
                         @Override
                         public String getModelId() {
                             return res.getModelId();
                         }
-    
+
                         @Override
                         public String getProbeId() {
                             return res.getProbeId();
                         }
-    
+
                         @Override
                         public boolean isReady() {
                             return true;
                         }
-    
+
                         @Override
                         public String getResultType() {
                             return res.getType();
                         }
-    
+
                         @Override
                         public String getResultBody() {
                             return res.getBody();
                         }
-    
+
                         @Override
                         public Integer getErrorCode() {
                             return res.getErrorCode() ==  0 ? null : res.getErrorCode();
                         }
-    
+
                         @Override
                         public String getErrorMessage() {
                             return res.getErrorMessage();
                         }
-    
+
                         @Override
                         public String getLogHolder() {
-                            return res.getLogHolder();
+                            return res.getLogHolderJson();
                         }
                     };
-        
+
                 long sleepTime = maxTime - System.currentTimeMillis();
-        
+
                 if (sleepTime <= 0)
                     throw new NCClientException(String.format("Request timeout: %d", timeout));
-        
+
                 synchronized (mux) {
                     try {
                         mux.wait(sleepTime);
@@ -775,7 +772,7 @@ public class NCClientImpl implements NCClient {
                 }
             }
         }
-        
+
         NCAskSyncBean b =
             checkAndExtract(
                 post(
@@ -790,10 +787,11 @@ public class NCClientImpl implements NCClient {
                 ),
                 NCAskSyncBean.class
             );
-        
+
         return b.getState();
+
     }
-    
+
     @Override
     public long addFeedback(String srvReqId, double score, String comment, Long usrId, String usrExtId)
         throws NCClientException, IOException {
@@ -884,7 +882,7 @@ public class NCClientImpl implements NCClient {
     @Override
     public NCNewCompany addCompany(String name, String website, String country, String region, String city,
         String address, String postalCode, String adminEmail, String adminPasswd, String adminFirstName,
-        String adminLastName, String adminAvatarUrl) throws IOException, NCClientException {
+        String adminLastName, String adminAvatarUrl, Map<String, String> props) throws IOException, NCClientException {
         notNull(name, "name");
         notNull(adminEmail, "adminEmail");
         notNull(adminPasswd, "adminPasswd");
@@ -908,7 +906,8 @@ public class NCClientImpl implements NCClient {
                     Pair.of("adminPasswd", adminPasswd),
                     Pair.of("adminFirstName", adminFirstName),
                     Pair.of("adminLastName", adminLastName),
-                    Pair.of("postalCode", adminAvatarUrl)
+                    Pair.of("postalCode", adminAvatarUrl),
+                    Pair.of("properties", props)
                 ),
                 NCTokenCreationBean.class
             );
@@ -934,7 +933,8 @@ public class NCClientImpl implements NCClient {
         String region,
         String city,
         String address,
-        String postalCode
+        String postalCode,
+        Map<String, String> props
     ) throws IOException, NCClientException {
         notNull(name, "name");
     
@@ -949,7 +949,8 @@ public class NCClientImpl implements NCClient {
                     Pair.of("region", region),
                     Pair.of("city", city),
                     Pair.of("address", address),
-                    Pair.of("postalCode", postalCode)
+                    Pair.of("postalCode", postalCode),
+                    Pair.of("properties", props)
                 ),
                 NCStatusResponseBean.class
             )

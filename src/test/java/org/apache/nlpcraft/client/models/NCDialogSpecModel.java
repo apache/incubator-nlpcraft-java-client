@@ -41,12 +41,13 @@ public class NCDialogSpecModel extends NCSpecModelAdapter {
         return Stream.of(mkElement("test1"), mkElement("test2")).collect(Collectors.toCollection(HashSet::new));
     }
 
-    @NCIntent("intent=intentId1 term~{id == 'test1'}")
+    @NCIntent("intent=intentId1 term~{tok_id() == 'test1'}")
     public org.apache.nlpcraft.model.NCResult onTest1() {
         return org.apache.nlpcraft.model.NCResult.text("OK");
     }
 
-    @NCIntent("intent=intentId2 flow='intentId1[1,1]' term~{id == 'test2'}")
+    // Flow - `intentId1` must be one time.
+    @NCIntent("intent=intentId2 flow='^(?:intentId1)(^:intentId1)*$' term~{tok_id() == 'test2'}")
     public org.apache.nlpcraft.model.NCResult onTest2() {
         return org.apache.nlpcraft.model.NCResult.text("OK");
     }

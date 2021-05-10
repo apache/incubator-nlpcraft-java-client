@@ -23,6 +23,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -73,7 +74,7 @@ abstract class NCTestAdapter {
         mdlClass = getModelClass().orElse(null);
 
         if (mdlClass != null)
-            NCEmbeddedProbe.start(mdlClass);
+            NCEmbeddedProbe.start("nlpcraft.conf", Collections.singleton(mdlClass.getName()));
 
         admCli = new NCClientBuilder().build();
         
