@@ -42,12 +42,13 @@
         <apache.rat.plugin.ver>0.13</apache.rat.plugin.ver>
         <maven.bazaarvoice.plugin.ver>0.9</maven.bazaarvoice.plugin.ver>
         <maven.clean.plugin.ver>3.1.0</maven.clean.plugin.ver>
+        <maven.dependency.plugin.ver>3.0.2</maven.dependency.plugin.ver>
     </properties>
 
     <name>NLPCraft - Java Client</name>
     <groupId>org.apache.nlpcraft</groupId>
     <artifactId>java-client</artifactId>
-    <version>0.7.2</version>
+    <version>0.7.5</version>
     <url>https://nlpcraft.apache.org</url>
     <description>An open source API to convert natural language into actions.</description>
 
@@ -84,7 +85,7 @@
         <connection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/apache/incubator-nlpcraft.git</developerConnection>
         <!-- Set actual tag name here -->
-        <tag>v0.7.2</tag>
+        <tag>v0.7.5</tag>
     </scm>
 
     <dependencies>
@@ -298,7 +299,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>${maven.dependency.plugin.ver}</version>
                 <executions>
                     <execution>
                         <id>copy-server-dependencies</id>
@@ -335,7 +336,7 @@
                             <healthcheckUrl>http://localhost:8081/api/v1/health</healthcheckUrl>
                             <waitAfterLaunch>600</waitAfterLaunch>
                             <arguments>
-                                <argument>java</argument>
+                                <argument>${java.home}/bin/java</argument>
                                 <argument>-Xmx4G</argument>
                                 <argument>-Xms4G</argument>
                                 <argument>--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED</argument>
@@ -395,7 +396,6 @@
                                 <!-- Reason: 'contextWordServer' should be started. -->
                                 <exclude>**/NCModelTest.*</exclude>
                             </excludes>
-
                         </configuration>
                     </execution>
                 </executions>

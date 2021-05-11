@@ -22,7 +22,7 @@ import java.util.*;
 /**
  * Request result descriptor.
  * 
- * @see NCClient#askSync(String, String, String, boolean, Long, String) 
+ * @see NCClient#askSync(String, String, Map, boolean, Long, String)
  * @see NCClient#askSync(String, String)
  * @see NCClient#check(Set, Integer, Long, String)
  */
@@ -66,7 +66,7 @@ public interface NCResult {
     /**
      * Gets ready status of the request. Note that results obtained from {@link NCClient#check(Set, Integer, Long, String)}
      * method can be in not-ready state indicating that they are submitted but still being processed. Results returned
-     * from {@link NCClient#askSync(String, String)} or {@link NCClient#askSync(String, String, String, boolean, Long, String)}
+     * from {@link NCClient#askSync(String, String)} or {@link NCClient#askSync(String, String, Map, boolean, Long, String)}
      * methods are always ready.
      *
      * @return Ready status of the request.

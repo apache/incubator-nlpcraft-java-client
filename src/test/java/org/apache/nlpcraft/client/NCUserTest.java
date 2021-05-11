@@ -21,6 +21,7 @@ import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -111,17 +112,21 @@ class NCUserTest extends NCTestAdapter {
         users = admCli.getAllUsers();
     
         assertFalse(getOpt(users, (u) -> usrId1 == u.getId()).isPresent());
+
+        Map<String, String> props = new HashMap<>();
+
+        props.put("k1", "v1");
     
         long usrId2 =
             admCli.addUser(
-                "email1@test.com", "pswd1", "first1", "last1", "av1", false, null, null
+                "email1@test.com", "pswd1", "first1", "last1", "av1", false, props, null
             );
     
         users = admCli.getAllUsers();
     
         user = get(users, (u) -> usrId2 == u.getId());
     
-        check(user, "email1@test.com", "first1", "last1", "av1", false, null, null);
+        check(user, "email1@test.com", "first1", "last1", "av1", false, null, props);
     
         admCli.deleteUser(usrId2, null);
     

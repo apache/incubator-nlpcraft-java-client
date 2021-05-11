@@ -74,7 +74,7 @@ abstract class NCTestAdapter {
         mdlClass = getModelClass().orElse(null);
 
         if (mdlClass != null)
-            NCEmbeddedProbe.start("nlpcraft.conf", Collections.singleton(mdlClass.getName()));
+            NCEmbeddedProbe.start(null, Collections.singleton(mdlClass.getName()));
 
         admCli = new NCClientBuilder().build();
         

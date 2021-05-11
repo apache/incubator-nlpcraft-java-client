@@ -17,10 +17,12 @@
 
 package org.apache.nlpcraft.client;
 
+import java.util.Map;
+
 /**
  * New company descriptor.
  * 
- * @see NCClient#addCompany(String, String, String, String, String, String, String, String, String, String, String, String) 
+ * @see NCClient#addCompany(String, String, String, String, String, String, String, String, String, String, String, String, Map)
  */
 public interface NCNewCompany {
     /**
