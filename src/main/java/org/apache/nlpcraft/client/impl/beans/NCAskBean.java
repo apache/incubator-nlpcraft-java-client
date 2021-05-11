@@ -17,7 +17,7 @@
 
 package org.apache.nlpcraft.client.impl.beans;
 
-import com.google.gson.annotations.*;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * REST bean.

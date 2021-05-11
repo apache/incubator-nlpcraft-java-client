@@ -17,7 +17,8 @@
 
 package org.apache.nlpcraft.client;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Request result descriptor.

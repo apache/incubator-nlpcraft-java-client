@@ -18,8 +18,8 @@
 package org.apache.nlpcraft.client.impl.beans;
 
 import com.google.gson.annotations.SerializedName;
-import org.apache.nlpcraft.client.NCSuggestionData;
 import org.apache.nlpcraft.client.NCSuggestion;
+import org.apache.nlpcraft.client.NCSuggestionData;
 
 import java.util.ArrayList;
 import java.util.List;

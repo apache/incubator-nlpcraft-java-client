@@ -17,8 +17,10 @@
 
 package org.apache.nlpcraft.client;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * <b>Java client API</b> provides native JVM wrapper for NLPCraft
@@ -156,7 +158,8 @@ public interface NCClient {
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
      */
-    long addFeedback(String srvReqId, double score, String comment, Long usrId, String usrExtId) throws NCClientException, IOException;
+    long addFeedback(String srvReqId, double score, String comment, Long usrId, String usrExtId)
+        throws NCClientException, IOException;
 
     /**
      * Deletes feedback record.
@@ -218,7 +221,8 @@ public interface NCClient {
         String avatarUrl,
         boolean isAdmin,
         Map<String, String> properties,
-        String extId) throws NCClientException, IOException;
+        String extId
+    ) throws NCClientException, IOException;
 
     /**
      * Updates given user. Current signed in user must have administrative privileges.
@@ -236,7 +240,8 @@ public interface NCClient {
         String firstName,
         String lastName,
         String avatarUrl,
-        Map<String, String> properties) throws NCClientException, IOException;
+        Map<String, String> properties
+    ) throws NCClientException, IOException;
 
     /**
      * Resets password for the given user. Note that NLPCraft doesn't store clear text passwords and therefore
@@ -388,7 +393,8 @@ public interface NCClient {
      * @see #ask(String, String)
      * @see #ask(String, String, Map, boolean, Long, String)
      */
-    NCResult askSync(String mdlId, String txt, Map<String, Object> data, boolean enableLog, Long usrId, String usrExtId) throws NCClientException, IOException;
+    NCResult askSync(String mdlId, String txt, Map<String, Object> data, boolean enableLog, Long usrId, String usrExtId)
+        throws NCClientException, IOException;
 
     default NCResult askSync(String mdlId, String txt) throws NCClientException, IOException {
         return askSync(mdlId, txt, null, false, null, null);
@@ -417,7 +423,8 @@ public interface NCClient {
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
      */
-    List<NCResult> check(Set<String> srvReqIds, Integer maxRows, Long usrId, String usrExtId) throws NCClientException, IOException;
+    List<NCResult> check(Set<String> srvReqIds, Integer maxRows, Long usrId, String usrExtId)
+        throws NCClientException, IOException;
 
     /**
      * Cancels the previously submitted sentence and removes its result, if any, from the server storage.
@@ -460,6 +467,7 @@ public interface NCClient {
      * @param adminFirstName Optional company administrator first name.
      * @param adminLastName Optional company administrator last name.
      * @param adminAvatarUrl Optional company administrator avatar URL.
+     * @param props TODO:
      * @return New company data.
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
@@ -477,7 +485,7 @@ public interface NCClient {
         String adminFirstName,
         String adminLastName,
         String adminAvatarUrl,
-        Map<String, String> props // TODO:
+        Map<String, String> props
     ) throws NCClientException, IOException;
 
     /**
