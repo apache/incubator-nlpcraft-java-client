@@ -467,7 +467,7 @@ public interface NCClient {
      * @param adminFirstName Optional company administrator first name.
      * @param adminLastName Optional company administrator last name.
      * @param adminAvatarUrl Optional company administrator avatar URL.
-     * @param props TODO:
+     * @param properties TODO:
      * @return New company data.
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
@@ -485,7 +485,7 @@ public interface NCClient {
         String adminFirstName,
         String adminLastName,
         String adminAvatarUrl,
-        Map<String, String> props
+        Map<String, String> properties
     ) throws NCClientException, IOException;
 
     /**
@@ -509,6 +509,7 @@ public interface NCClient {
      * @param city Optional company address city.
      * @param address Optional company address.
      * @param postalCode Optional company address postal code.
+     * @param properties TODO:
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
      */
@@ -520,7 +521,7 @@ public interface NCClient {
         String city,
         String address,
         String postalCode,
-        Map<String, String> props // TODO:
+        Map<String, String> properties
     ) throws NCClientException, IOException;
 
     /**
