@@ -76,9 +76,9 @@ public interface NCUser {
     String getExternalId();
     
     /**
-     * Gets properties.
+     * Gets user properties (metadata).
      *
-     * @return Optional properties.
+     * @return Optional user properties (metadata).
      */
     Map<String, String> getProperties();
 }

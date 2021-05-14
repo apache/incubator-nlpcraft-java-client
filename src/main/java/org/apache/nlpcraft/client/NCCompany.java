@@ -82,10 +82,9 @@ public interface NCCompany {
     String getPostalCode();
 
     /**
-     * TODO:
-     * Gets properties.
+     * Gets company properties (metadata).
      *
-     * @return Optional properties.
+     * @return Optional company properties (metadata).
      */
     Map<String, String> getProperties();
 }

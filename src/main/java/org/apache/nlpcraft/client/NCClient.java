@@ -339,7 +339,7 @@ public interface NCClient {
      *
      * @param mdlId ID of the model to submit the request to.
      * @param txt Text to process.
-     * @param data Optional JSON data payload. TODO:
+     * @param data Optional JSON data payload. Can be {@code null} or empty.
      * @param enableLog Whether or not to enable processing log collection.
      * @param usrId Optional user ID.
      * @param usrExtId Optional external "on-behalf-of" user ID.
@@ -467,7 +467,7 @@ public interface NCClient {
      * @param adminFirstName Optional company administrator first name.
      * @param adminLastName Optional company administrator last name.
      * @param adminAvatarUrl Optional company administrator avatar URL.
-     * @param properties TODO:
+     * @param properties Company metadata.
      * @return New company data.
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
@@ -509,7 +509,7 @@ public interface NCClient {
      * @param city Optional company address city.
      * @param address Optional company address.
      * @param postalCode Optional company address postal code.
-     * @param properties TODO:
+     * @param properties Company metadata.
      * @throws NCClientException Thrown in case of client-specific errors.
      * @throws IOException Thrown in case of generic I/O errors.
      */
