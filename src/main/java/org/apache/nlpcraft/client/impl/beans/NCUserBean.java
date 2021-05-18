@@ -33,7 +33,7 @@ public class NCUserBean extends NCStatusResponseBean implements NCUser {
     @SerializedName("lastName") private String lastName;
     @SerializedName("avatarUrl") private String avatarUrl;
     @SerializedName("isAdmin") private boolean isAdmin;
-    @SerializedName("properties") private Map<String, String> properties;
+    @SerializedName("properties") private Map<String, Object> properties;
     
     @Override public long getId() {
         return id;
@@ -56,7 +56,7 @@ public class NCUserBean extends NCStatusResponseBean implements NCUser {
     @Override public String getExternalId() {
     return usrExtId;
 }
-    @Override public Map<String, String> getProperties() {
+    @Override public Map<String, Object> getProperties() {
         return properties;
     }
 }

@@ -220,7 +220,7 @@ public interface NCClient {
         String lastName,
         String avatarUrl,
         boolean isAdmin,
-        Map<String, String> properties,
+        Map<String, Object> properties,
         String extId
     ) throws NCClientException, IOException;
 
@@ -240,7 +240,7 @@ public interface NCClient {
         String firstName,
         String lastName,
         String avatarUrl,
-        Map<String, String> properties
+        Map<String, Object> properties
     ) throws NCClientException, IOException;
 
     /**
@@ -485,7 +485,7 @@ public interface NCClient {
         String adminFirstName,
         String adminLastName,
         String adminAvatarUrl,
-        Map<String, String> properties
+        Map<String, Object> properties
     ) throws NCClientException, IOException;
 
     /**
@@ -521,7 +521,7 @@ public interface NCClient {
         String city,
         String address,
         String postalCode,
-        Map<String, String> properties
+        Map<String, Object> properties
     ) throws NCClientException, IOException;
 
     /**

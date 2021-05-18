@@ -58,7 +58,7 @@ class NCUserTest extends NCTestAdapter {
         String avatar,
         boolean isAdmin,
         String extId,
-        Map<String, String> props
+        Map<String, Object> props
     ) {
         assertEquals(u.getEmail(), email);
         assertEquals(u.getFirstName(), firstName);
@@ -99,13 +99,13 @@ class NCUserTest extends NCTestAdapter {
         
         admCli.resetUserPassword(usrId1, "pswd2");
         admCli.updateUserAdmin(usrId1, false);
-        admCli.updateUser(usrId1, "first2", "last2", "av2", null);
+        admCli.updateUser(usrId1, "first2", "last2", "av2", MAP);
     
         users = admCli.getAllUsers();
     
         user = get(users, (u) -> usrId1 == u.getId());
         
-        check(user, "email1@test.com", "first2", "last2", "av2", false, null, null);
+        check(user, "email1@test.com", "first2", "last2", "av2", false, null, MAP);
     
         admCli.deleteUser(usrId1, null);
     
@@ -113,20 +113,16 @@ class NCUserTest extends NCTestAdapter {
     
         assertFalse(getOpt(users, (u) -> usrId1 == u.getId()).isPresent());
 
-        Map<String, String> props = new HashMap<>();
-
-        props.put("k1", "v1");
-    
         long usrId2 =
             admCli.addUser(
-                "email1@test.com", "pswd1", "first1", "last1", "av1", false, props, null
+                "email1@test.com", "pswd1", "first1", "last1", "av1", false, MAP, null
             );
     
         users = admCli.getAllUsers();
     
         user = get(users, (u) -> usrId2 == u.getId());
     
-        check(user, "email1@test.com", "first1", "last1", "av1", false, null, props);
+        check(user, "email1@test.com", "first1", "last1", "av1", false, null, MAP);
     
         admCli.deleteUser(usrId2, null);
     

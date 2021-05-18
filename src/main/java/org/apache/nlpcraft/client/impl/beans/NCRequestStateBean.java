@@ -19,6 +19,8 @@ package org.apache.nlpcraft.client.impl.beans;
 
 import org.apache.nlpcraft.client.NCResult;
 
+import java.util.Map;
+
 /**
  * REST bean.
  */
@@ -34,6 +36,7 @@ public class NCRequestStateBean implements NCResult {
     private Integer errorCode;
     private String error;
     private String logHolder;
+    private Map<String, Object> resMeta;
     
     @Override public String getServerRequestId() {
         return srvReqId;
@@ -68,7 +71,10 @@ public class NCRequestStateBean implements NCResult {
     @Override public String getLogHolder() {
         return logHolder;
     }
-    
+    @Override public Map<String, Object> getResultMeta() {
+        return resMeta;
+    }
+
     public void setSrvReqId(String srvReqId) {
         this.srvReqId = srvReqId;
     }
@@ -84,10 +90,10 @@ public class NCRequestStateBean implements NCResult {
     public void setProbeId(String probeId) {
         this.probeId = probeId;
     }
-    public void setResType(String resType) {
+    public void setResultType(String resType) {
         this.resType = resType;
     }
-    public void setResBody(String resBody) {
+    public void setResultBody(String resBody) {
         this.resBody = resBody;
     }
     public void setStatus(String status) {
@@ -101,5 +107,8 @@ public class NCRequestStateBean implements NCResult {
     }
     public void setLogHolder(String logHolder) {
         this.logHolder = logHolder;
+    }
+    public void setResultMeta(Map<String, Object> resMeta) {
+        this.resMeta = resMeta;
     }
 }

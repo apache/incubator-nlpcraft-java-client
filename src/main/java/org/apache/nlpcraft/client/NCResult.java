@@ -112,4 +112,7 @@ public interface NCResult {
      * @return Optional processing log. Can be {@code null}.
      */
     String getLogHolder();
+
+    // TODO:
+    Map<String, Object> getResultMeta();
 }

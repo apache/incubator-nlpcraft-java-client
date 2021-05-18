@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ResponseHandler;
@@ -80,32 +81,40 @@ import java.util.stream.Collectors;
 @SuppressWarnings("JavaDoc")
 public class NCClientImpl implements NCClient {
     private static final String STATUS_API_OK = "API_OK";
-    
+
+    private static final Type MAP_TYPE = new TypeToken<Map<String, Object>>(){}.getType();
+
+    private static final Gson gsonExt = new Gson();
     private static final Gson gson =
         new GsonBuilder().registerTypeAdapter(
             NCRequestStateBean.class,
             (JsonDeserializer<NCRequestStateBean>) (e, type, ctx) -> {
                 JsonObject o = e.getAsJsonObject();
                 NCRequestStateBean b = new NCRequestStateBean();
-    
+
                 b.setSrvReqId(o.get("srvReqId").getAsString());
                 b.setTxt(o.get("txt").getAsString());
                 b.setUsrId(o.get("usrId").getAsLong());
                 b.setMdlId(o.get("mdlId").getAsString());
                 b.setProbeId(convert(o, "probeId", JsonElement::getAsString));
-                b.setResType(convert(o, "resType", JsonElement::getAsString));
-                b.setResBody(
+                b.setResultType(convert(o, "resType", JsonElement::getAsString));
+                b.setResultBody(
                     convert(o, "resBody", (resBody) -> resBody == null ?
                         null :
                         resBody.isJsonObject() ?
                             resBody.getAsJsonObject().toString() :
                             resBody.getAsString())
                 );
+                b.setResultMeta(convert(o, "resMeta", e1 -> {
+                    Map<String, Object> m = gsonExt.fromJson(e1, MAP_TYPE);
+
+                    return m == null || m.isEmpty() ? null : m;
+                }));
                 b.setStatus(o.get("status").getAsString());
                 b.setErrorCode(convert(o, "errorCode", JsonElement::getAsInt));
                 b.setError(convert(o, "error", JsonElement::getAsString));
                 b.setLogHolder(convert(o, "logHolder", (logHolder) -> logHolder.getAsJsonObject().toString()));
-    
+
                 return b;
             }).create();
     
@@ -469,7 +478,7 @@ public class NCClientImpl implements NCClient {
         String lastName,
         String avatarUrl,
         boolean isAdmin,
-        Map<String, String> properties,
+        Map<String, Object> properties,
         String extId
     ) throws NCClientException, IOException {
         notNull(email, "email");
@@ -514,7 +523,7 @@ public class NCClientImpl implements NCClient {
     
     @Override
     public void updateUser(
-        long id, String firstName, String lastName, String avatarUrl, Map<String, String> properties
+        long id, String firstName, String lastName, String avatarUrl, Map<String, Object> properties
     ) throws NCClientException, IOException {
         notNull(firstName, "firstName");
         notNull(lastName, "lastName");
@@ -753,7 +762,12 @@ public class NCClientImpl implements NCClient {
 
                         @Override
                         public String getLogHolder() {
-                            return res.getLogHolderJson();
+                            return res.getLogJson();
+                        }
+
+                        @Override
+                        public Map<String, Object> getResultMeta() {
+                            return res.getMetadata();
                         }
                     };
 
@@ -882,7 +896,7 @@ public class NCClientImpl implements NCClient {
     @Override
     public NCNewCompany addCompany(String name, String website, String country, String region, String city,
         String address, String postalCode, String adminEmail, String adminPasswd, String adminFirstName,
-        String adminLastName, String adminAvatarUrl, Map<String, String> props) throws IOException, NCClientException {
+        String adminLastName, String adminAvatarUrl, Map<String, Object> props) throws IOException, NCClientException {
         notNull(name, "name");
         notNull(adminEmail, "adminEmail");
         notNull(adminPasswd, "adminPasswd");
@@ -934,7 +948,7 @@ public class NCClientImpl implements NCClient {
         String city,
         String address,
         String postalCode,
-        Map<String, String> props
+        Map<String, Object> props
     ) throws IOException, NCClientException {
         notNull(name, "name");
     

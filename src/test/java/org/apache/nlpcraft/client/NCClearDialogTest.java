@@ -51,14 +51,14 @@ class NCClearDialogTest extends NCTestAdapter {
         check("test2", this::checkError);
 
         // `test1` is always ok.
-        check("test1", this::checkOk);
+        check("test1", res -> checkOk(res, null));
 
         // There is one `test1` before.
-        check("test2", this::checkOk);
+        check("test2", res -> checkOk(res, null));
 
         // `test1` is always ok.
-        check("test1", this::checkOk);
-        check("test1", this::checkOk);
+        check("test1", res -> checkOk(res, null));
+        check("test1", res -> checkOk(res, null));
 
         // There are too much `test1` before.
         check("test2", this::checkError);

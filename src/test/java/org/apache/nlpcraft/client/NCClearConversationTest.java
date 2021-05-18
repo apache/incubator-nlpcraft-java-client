@@ -46,10 +46,10 @@ class NCClearConversationTest extends NCTestAdapter {
         // missed 'test1'
         check("test2", this::checkError);
 
-        check("test1 test2", this::checkOk);
+        check("test1 test2", res -> checkOk(res, null));
 
         // 'test1' received from conversation.
-        check("test2", this::checkOk);
+        check("test2", res -> checkOk(res, null));
     }
 
     /**

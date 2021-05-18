@@ -80,5 +80,5 @@ public interface NCUser {
      *
      * @return Optional user properties (metadata).
      */
-    Map<String, String> getProperties();
+    Map<String, Object> getProperties();
 }

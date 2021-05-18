@@ -73,6 +73,7 @@ class NCAskSyncTest extends NCTestAdapter {
         // Only latin charset is supported.
         check("El tiempo en España", this::checkError);
 
-        check("test", this::checkOk);
+        check("test", res -> checkOk(res, null));
+        check("meta", res -> checkOk(res, NCCommonSpecModel.MAP));
     }
 }

@@ -34,7 +34,7 @@ public class NCCompanyBean extends NCStatusResponseBean implements NCCompany {
     @SerializedName("city") private String city;
     @SerializedName("address") private String address;
     @SerializedName("postalCode") private String postalCode;
-    @SerializedName("properties") private Map<String, String> properties;
+    @SerializedName("properties") private Map<String, Object> properties;
     
     @Override public long getId() {
         return id;
@@ -60,7 +60,7 @@ public class NCCompanyBean extends NCStatusResponseBean implements NCCompany {
     @Override public String getPostalCode() {
         return postalCode;
     }
-    @Override public Map<String, String> getProperties() {
+    @Override public Map<String, Object> getProperties() {
         return properties;
     }
 }
