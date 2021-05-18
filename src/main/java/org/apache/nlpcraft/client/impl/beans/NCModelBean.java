@@ -24,17 +24,25 @@ import org.apache.nlpcraft.client.NCModel;
  * REST bean.
  */
 public class NCModelBean implements NCModel {
-    @SerializedName("id") private String id;
-    @SerializedName("name") private String name;
-    @SerializedName("version") private String version;
-    
-    @Override public String getId() {
+    @SerializedName("id")
+    private String id;
+    @SerializedName("name")
+    private String name;
+    @SerializedName("version")
+    private String version;
+
+    @Override
+    public String getId() {
         return id;
     }
-    @Override public String getName() {
+
+    @Override
+    public String getName() {
         return name;
     }
-    @Override public String getVersion() {
+
+    @Override
+    public String getVersion() {
         return version;
     }
 }

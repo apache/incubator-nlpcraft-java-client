@@ -23,12 +23,15 @@ import com.google.gson.annotations.SerializedName;
  * REST bean.
  */
 public class NCErrorMessageBean {
-    @SerializedName("code") private String code;
-    @SerializedName("msg") private String msg;
+    @SerializedName("code")
+    private String code;
+    @SerializedName("msg")
+    private String msg;
 
     public String getCode() {
         return code;
     }
+
     public String getMessage() {
         return msg;
     }

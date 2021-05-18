@@ -22,8 +22,9 @@ import com.google.gson.annotations.SerializedName;
 /**
  * REST bean.
  */
-public class NCSuggestionResultBean extends NCStatusResponseBean  {
-    @SerializedName("result") private NCSuggestionDataBean result;
+public class NCSuggestionResultBean extends NCStatusResponseBean {
+    @SerializedName("result")
+    private NCSuggestionDataBean result;
 
     public NCSuggestionDataBean getResult() {
         return result;

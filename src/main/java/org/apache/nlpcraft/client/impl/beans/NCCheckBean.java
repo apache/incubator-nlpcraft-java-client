@@ -24,8 +24,9 @@ import java.util.List;
 /**
  * REST bean.
  */
-public class NCCheckBean extends NCStatusResponseBean  {
-    @SerializedName("states") private List<NCRequestStateBean> states;
+public class NCCheckBean extends NCStatusResponseBean {
+    @SerializedName("states")
+    private List<NCRequestStateBean> states;
 
     public List<NCRequestStateBean> getStates() {
         return states;

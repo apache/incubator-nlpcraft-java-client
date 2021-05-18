@@ -24,8 +24,9 @@ import java.util.List;
 /**
  * REST bean.
  */
-public class NCUsersAllBean extends NCStatusResponseBean  {
-    @SerializedName("users") private List<NCUserBean> users;
+public class NCUsersAllBean extends NCStatusResponseBean {
+    @SerializedName("users")
+    private List<NCUserBean> users;
 
     public List<NCUserBean> getUsers() {
         return users;

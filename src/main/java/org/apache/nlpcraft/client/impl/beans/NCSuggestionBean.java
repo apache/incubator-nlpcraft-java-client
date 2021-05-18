@@ -24,13 +24,18 @@ import org.apache.nlpcraft.client.NCSuggestion;
  * REST bean.
  */
 public class NCSuggestionBean implements NCSuggestion {
-    @SerializedName("score") private double score;
-    @SerializedName("synonym") private String synonym;
+    @SerializedName("score")
+    private double score;
+    @SerializedName("synonym")
+    private String synonym;
 
-    @Override public double getScore() {
+    @Override
+    public double getScore() {
         return score;
     }
-    @Override public String getSynonym() {
+
+    @Override
+    public String getSynonym() {
         return synonym;
     }
 }

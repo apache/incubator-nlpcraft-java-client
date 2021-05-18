@@ -24,8 +24,9 @@ import java.util.List;
 /**
  * REST bean.
  */
-public class NCFeedbackAllBean extends NCStatusResponseBean  {
-    @SerializedName("feedback") private List<NCFeedbackBean> feedback;
+public class NCFeedbackAllBean extends NCStatusResponseBean {
+    @SerializedName("feedback")
+    private List<NCFeedbackBean> feedback;
 
     public List<NCFeedbackBean> getFeedback() {
         return feedback;

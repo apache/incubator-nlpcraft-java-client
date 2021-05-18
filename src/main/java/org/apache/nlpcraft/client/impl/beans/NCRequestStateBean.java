@@ -42,49 +42,84 @@ public class NCRequestStateBean implements NCResult {
     public String getServerRequestId() {
         return srvReqId;
     }
+
     @Override
     public String getText() {
         return txt;
     }
+
     @Override
     public long getUserId() {
         return usrId;
     }
+
     @Override
     public String getModelId() {
         return mdlId;
     }
+
     @Override
     public String getProbeId() {
         return probeId;
     }
+
+    public void setProbeId(String probeId) {
+        this.probeId = probeId;
+    }
+
     @Override
     public String getResultType() {
         return resType;
     }
+
+    public void setResultType(String resType) {
+        this.resType = resType;
+    }
+
     @Override
     public String getResultBody() {
         return resBody;
     }
+
+    public void setResultBody(String resBody) {
+        this.resBody = resBody;
+    }
+
     @Override
     public boolean isReady() {
         return "QRY_READY".equals(status);
     }
+
     @Override
     public Integer getErrorCode() {
         return errorCode;
     }
+
+    public void setErrorCode(Integer errorCode) {
+        this.errorCode = errorCode;
+    }
+
     @Override
     public String getErrorMessage() {
         return error;
     }
+
     @Override
     public String getLogHolder() {
         return logHolder;
     }
+
+    public void setLogHolder(String logHolder) {
+        this.logHolder = logHolder;
+    }
+
     @Override
     public Map<String, Object> getResultMeta() {
         return resMeta;
+    }
+
+    public void setResultMeta(Map<String, Object> resMeta) {
+        this.resMeta = resMeta;
     }
 
     public void setSrvReqId(String srvReqId) {
@@ -103,35 +138,11 @@ public class NCRequestStateBean implements NCResult {
         this.mdlId = mdlId;
     }
 
-    public void setProbeId(String probeId) {
-        this.probeId = probeId;
-    }
-
-    public void setResultType(String resType) {
-        this.resType = resType;
-    }
-
-    public void setResultBody(String resBody) {
-        this.resBody = resBody;
-    }
-
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setErrorCode(Integer errorCode) {
-        this.errorCode = errorCode;
-    }
-
     public void setError(String error) {
         this.error = error;
-    }
-
-    public void setLogHolder(String logHolder) {
-        this.logHolder = logHolder;
-    }
-
-    public void setResultMeta(Map<String, Object> resMeta) {
-        this.resMeta = resMeta;
     }
 }

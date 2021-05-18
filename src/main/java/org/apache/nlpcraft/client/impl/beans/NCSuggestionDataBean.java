@@ -30,26 +30,50 @@ import java.util.stream.Collectors;
  * REST bean.
  */
 public class NCSuggestionDataBean implements NCSuggestionData {
-    @SerializedName("modelId") private String modelId;
-    @SerializedName("minScore") private double minScore;
-    @SerializedName("durationMs") private long durationMs;
-    @SerializedName("timestamp") private long timestamp;
-    @SerializedName("error") private String error;
-    @SerializedName("suggestions") private List<Map<String, List<NCSuggestionBean>>> suggestions;
-    @SerializedName("warnings") private java.util.List<String> warnings;
+    @SerializedName("modelId")
+    private String modelId;
+    @SerializedName("minScore")
+    private double minScore;
+    @SerializedName("durationMs")
+    private long durationMs;
+    @SerializedName("timestamp")
+    private long timestamp;
+    @SerializedName("error")
+    private String error;
+    @SerializedName("suggestions")
+    private List<Map<String, List<NCSuggestionBean>>> suggestions;
+    @SerializedName("warnings")
+    private java.util.List<String> warnings;
 
-    @Override public List<String> getWarnings() { return warnings; }
-    @Override public String getModelId() {
+    @Override
+    public List<String> getWarnings() {
+        return warnings;
+    }
+
+    @Override
+    public String getModelId() {
         return modelId;
     }
-    @Override public double getMinScore() {
+
+    @Override
+    public double getMinScore() {
         return minScore;
     }
-    @Override public long getDurationMs() {
+
+    @Override
+    public long getDurationMs() {
         return durationMs;
     }
-    @Override public long getTimestamp() { return timestamp; }
-    @Override public String getError() { return error; }
+
+    @Override
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    @Override
+    public String getError() {
+        return error;
+    }
 
     @Override
     public List<Map<String, List<NCSuggestion>>> getSynonyms() {
