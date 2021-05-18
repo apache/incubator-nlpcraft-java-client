@@ -22,7 +22,6 @@ import org.apache.nlpcraft.model.NCIntent;
 import org.apache.nlpcraft.model.NCResult;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -64,7 +63,7 @@ public class NCCommonSpecModel extends NCSpecModelAdapter {
     }
 
     @NCIntent("intent=intentMetaId term~{tok_id() == 'meta'}")
-    public org.apache.nlpcraft.model.NCResult onTestMeta() {
+    public org.apache.nlpcraft.model.NCResult onMeta() {
         NCResult res = NCResult.text("OK");
 
         res.getMetadata().putAll(MAP);
