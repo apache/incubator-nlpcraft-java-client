@@ -21,8 +21,6 @@ import org.apache.nlpcraft.client.models.NCCommonSpecModel;
 import org.apache.nlpcraft.model.NCModel;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -46,22 +44,17 @@ class NCAskSyncTest extends NCTestAdapter {
         // Different combinations of input parameters.
         resConsumer.accept(admCli.askSync(MDL_ID, txt, null, true, null, null));
 
-        Map<String, Object> data = new HashMap<>();
-
-        data.put("a", 1);
-        data.put("b", "b1");
-
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, data, true, null, null));
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, data, false, null, null));
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, data, false, admUsrId, null));
+        resConsumer.accept(admCli.askSync(MDL_ID, txt, MAP, true, null, null));
+        resConsumer.accept(admCli.askSync(MDL_ID, txt, MAP, false, null, null));
+        resConsumer.accept(admCli.askSync(MDL_ID, txt, MAP, false, admUsrId, null));
         
         String extId = "extId";
     
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, data, false, null, extId));
+        resConsumer.accept(admCli.askSync(MDL_ID, txt, MAP, false, null, extId));
     
         long id = get(admCli.getAllUsers(), (u) -> extId.equals(u.getExternalId())).getId();
     
-        resConsumer.accept(admCli.askSync(MDL_ID, txt, data, false, id, extId));
+        resConsumer.accept(admCli.askSync(MDL_ID, txt, MAP, false, id, extId));
     }
     
     /**
@@ -73,6 +66,7 @@ class NCAskSyncTest extends NCTestAdapter {
         // Only latin charset is supported.
         check("El tiempo en España", this::checkError);
 
-        check("test", this::checkOk);
+        check("test", res -> checkOk(res, null));
+        check("meta", res -> checkOk(res, NCCommonSpecModel.MAP));
     }
 }

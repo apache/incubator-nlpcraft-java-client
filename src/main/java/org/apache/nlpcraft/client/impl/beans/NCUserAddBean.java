@@ -22,8 +22,9 @@ import com.google.gson.annotations.SerializedName;
 /**
  * REST bean.
  */
-public class NCUserAddBean extends NCStatusResponseBean  {
-    @SerializedName("id") private long id;
+public class NCUserAddBean extends NCStatusResponseBean {
+    @SerializedName("id")
+    private long id;
 
     public long getId() {
         return id;

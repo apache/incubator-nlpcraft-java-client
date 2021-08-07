@@ -17,8 +17,7 @@
 
 package org.apache.nlpcraft.client;
 
-import org.apache.nlpcraft.client.models.NCSuggestionSpecModel;
-import org.apache.nlpcraft.model.NCModel;
+import org.apache.nlpcraft.client.models.NCRestSpecModel;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -26,24 +25,19 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static org.apache.nlpcraft.client.models.NCSuggestionSpecModel.MDL_ID;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.apache.nlpcraft.client.models.NCRestSpecModel.MDL_ID;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * REST client test. Methods `model/sugsyn`.
+ * REST client test. Methods `model/sugsyn`. Required started 'ctxword' server.
  */
-class NCModelTest extends NCTestAdapter {
+class NCModelTest2 extends NCTestAdapter {
     @Override
-    Optional<Class<? extends NCModel>> getModelClass() {
-        return Optional.of(NCSuggestionSpecModel.class);
+    Optional<Class<? extends org.apache.nlpcraft.model.NCModel>> getModelClass() {
+        return Optional.of(NCRestSpecModel.class);
     }
 
     /**
-     *
      * @param s
      * @param minScore
      * @throws Exception

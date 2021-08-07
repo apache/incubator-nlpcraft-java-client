@@ -17,24 +17,31 @@
 
 package org.apache.nlpcraft.client;
 
+import java.util.List;
+
 /**
- * Individual synonym suggestion.
+ * Model element's value descriptor.
+ * <p>
+ * Each model element can generally be recognized either by one of its synonyms or values. Elements and their values
+ * are analogous to types and instances of that type in programming languages. Each value
+ * has a name and optional set of its own synonyms by which that value, and ultimately its element, can be
+ * recognized by. Note that value name itself acts as an implicit synonym even when no additional synonyms added
+ * for that value.
  *
- * @see <a href="https://nlpcraft.apache.org/tools/syn_tool.html">Synonym suggestion tool</a>.
- * @see NCSuggestionData#getSynonyms()
+ * @see NCElement#getValues()
  */
-public interface NCSuggestion {
+public interface NCValue {
     /**
-     * Gets score of the suggested synonym.
+     * Gets value name.
      *
-     * @return Score of the suggested synonym.
+     * @return Value name.
      */
-    double getScore();
+    String getName();
 
     /**
-     * Gets synonym.
+     * Gets optional list of value's synonyms.
      *
-     * @return A synonym.
+     * @return Potentially empty list of value's synonyms.
      */
-    String getSynonym();
+    List<String> getSynonyms();
 }

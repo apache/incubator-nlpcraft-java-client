@@ -24,14 +24,13 @@ import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * REST client test adapter.
@@ -47,14 +46,11 @@ abstract class NCTestAdapter {
          */
         void run() throws Exception;
     }
-    
     /** */
     protected NCClient admCli;
-    
     /** */
     protected long admUsrId;
 
-    /** */
     private Class<? extends NCModel> mdlClass;
 
     /**
@@ -63,6 +59,20 @@ abstract class NCTestAdapter {
      */
     Optional<Class<? extends NCModel>> getModelClass() {
         return Optional.empty();
+    }
+
+    protected static Map<String, Object> MAP = new HashMap<>();
+
+    static {
+        MAP.put("k1", "v1");
+        MAP.put("k2", 2.2);
+
+        Map<String, Object> m = new HashMap<>();
+
+        m.put("k11", "v11");
+        m.put("k12", 2.22);
+
+        MAP.put("k3", m);
     }
     
     /**
@@ -172,28 +182,29 @@ abstract class NCTestAdapter {
     
         return opt.get();
     }
-    
+
     /**
      *
      * @param state
      */
-    protected void checkOk(NCResult state) {
+    protected void checkOk(NCResult state, Map<String, Object> meta) {
         System.out.printf(
             "Text: %s \ntype: %s\nresult: %s%n",
             state.getText(),
             state.getResultType(),
             state.getResultBody()
         );
-    
+
         if (state.getLogHolder() != null)
             System.out.printf("log:\n%s%n", state.getLogHolder());
-        
+
         assertNotNull(state.getResultBody(), "Error: " + state.getErrorMessage());
         assertNotNull(state.getResultType());
         assertNull(state.getErrorMessage());
         assertNull(state.getErrorCode());
+        assertEquals(meta, state.getResultMeta());
     }
-    
+
     /**
      *
      * @param state

@@ -19,6 +19,8 @@ package org.apache.nlpcraft.client.impl.beans;
 
 import org.apache.nlpcraft.client.NCResult;
 
+import java.util.Map;
+
 /**
  * REST bean.
  */
@@ -34,72 +36,113 @@ public class NCRequestStateBean implements NCResult {
     private Integer errorCode;
     private String error;
     private String logHolder;
-    
-    @Override public String getServerRequestId() {
+    private Map<String, Object> resMeta;
+
+    @Override
+    public String getServerRequestId() {
         return srvReqId;
     }
-    @Override public String getText() {
-    return txt;
-}
-    @Override public long getUserId() {
-    return usrId;
-}
-    @Override public String getModelId() {
-    return mdlId;
-}
-    @Override public String getProbeId() {
-    return probeId;
-}
-    @Override public String getResultType() {
-    return resType;
-}
-    @Override public String getResultBody() {
-    return resBody;
-}
-    @Override public boolean isReady() {
-    return "QRY_READY".equals(status);
-}
-    @Override public Integer getErrorCode() {
-    return errorCode;
-}
-    @Override public String getErrorMessage() {
-    return error;
-}
-    @Override public String getLogHolder() {
-        return logHolder;
+
+    @Override
+    public String getText() {
+        return txt;
     }
-    
-    public void setSrvReqId(String srvReqId) {
-        this.srvReqId = srvReqId;
+
+    @Override
+    public long getUserId() {
+        return usrId;
     }
-    public void setTxt(String txt) {
-        this.txt = txt;
+
+    @Override
+    public String getModelId() {
+        return mdlId;
     }
-    public void setUsrId(long usrId) {
-        this.usrId = usrId;
+
+    @Override
+    public String getProbeId() {
+        return probeId;
     }
-    public void setMdlId(String mdlId) {
-        this.mdlId = mdlId;
-    }
+
     public void setProbeId(String probeId) {
         this.probeId = probeId;
     }
-    public void setResType(String resType) {
+
+    @Override
+    public String getResultType() {
+        return resType;
+    }
+
+    public void setResultType(String resType) {
         this.resType = resType;
     }
-    public void setResBody(String resBody) {
+
+    @Override
+    public String getResultBody() {
+        return resBody;
+    }
+
+    public void setResultBody(String resBody) {
         this.resBody = resBody;
     }
-    public void setStatus(String status) {
-        this.status = status;
+
+    @Override
+    public boolean isReady() {
+        return "QRY_READY".equals(status);
     }
+
+    @Override
+    public Integer getErrorCode() {
+        return errorCode;
+    }
+
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
     }
-    public void setError(String error) {
-        this.error = error;
+
+    @Override
+    public String getErrorMessage() {
+        return error;
     }
+
+    @Override
+    public String getLogHolder() {
+        return logHolder;
+    }
+
     public void setLogHolder(String logHolder) {
         this.logHolder = logHolder;
+    }
+
+    @Override
+    public Map<String, Object> getResultMeta() {
+        return resMeta;
+    }
+
+    public void setResultMeta(Map<String, Object> resMeta) {
+        this.resMeta = resMeta;
+    }
+
+    public void setSrvReqId(String srvReqId) {
+        this.srvReqId = srvReqId;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
+
+    public void setUsrId(long usrId) {
+        this.usrId = usrId;
+    }
+
+    public void setMdlId(String mdlId) {
+        this.mdlId = mdlId;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

@@ -86,5 +86,5 @@ public interface NCCompany {
      *
      * @return Optional company properties (metadata).
      */
-    Map<String, String> getProperties();
+    Map<String, Object> getProperties();
 }

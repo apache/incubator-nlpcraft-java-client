@@ -26,41 +26,67 @@ import java.util.Map;
  * REST bean.
  */
 public class NCCompanyBean extends NCStatusResponseBean implements NCCompany {
-    @SerializedName("id") private long id;
-    @SerializedName("name") private String name;
-    @SerializedName("website") private String website;
-    @SerializedName("country") private String country;
-    @SerializedName("region") private String region;
-    @SerializedName("city") private String city;
-    @SerializedName("address") private String address;
-    @SerializedName("postalCode") private String postalCode;
-    @SerializedName("properties") private Map<String, String> properties;
-    
-    @Override public long getId() {
+    @SerializedName("id")
+    private long id;
+    @SerializedName("name")
+    private String name;
+    @SerializedName("website")
+    private String website;
+    @SerializedName("country")
+    private String country;
+    @SerializedName("region")
+    private String region;
+    @SerializedName("city")
+    private String city;
+    @SerializedName("address")
+    private String address;
+    @SerializedName("postalCode")
+    private String postalCode;
+    @SerializedName("properties")
+    private Map<String, Object> properties;
+
+    @Override
+    public long getId() {
         return id;
     }
-    @Override public String getName() {
+
+    @Override
+    public String getName() {
         return name;
     }
-    @Override public String getWebsite() {
+
+    @Override
+    public String getWebsite() {
         return website;
     }
-    @Override public String getCountry() {
+
+    @Override
+    public String getCountry() {
         return country;
     }
-    @Override public String getRegion() {
+
+    @Override
+    public String getRegion() {
         return region;
     }
-    @Override public String getCity() {
+
+    @Override
+    public String getCity() {
         return city;
     }
-    @Override public String getAddress() {
+
+    @Override
+    public String getAddress() {
         return address;
     }
-    @Override public String getPostalCode() {
+
+    @Override
+    public String getPostalCode() {
         return postalCode;
     }
-    @Override public Map<String, String> getProperties() {
+
+    @Override
+    public Map<String, Object> getProperties() {
         return properties;
     }
 }

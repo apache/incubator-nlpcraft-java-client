@@ -21,30 +21,31 @@ package org.apache.nlpcraft.client;
  * Data model descriptor.
  *
  * @see NCClient#getProbes()
- * @see NCProbe#getModels() 
+ * @see NCProbe#getModels()
+ * @see NCModelInfo
  */
 public interface NCModel {
     /**
      * Gets unique, <i>immutable</i> ID of this model.
      * <p>
      * Note that <b>model IDs are immutable</b> while name and version
-     * can be changed freely. Changing model ID is equal to creating a completely new model that will have
-     * to be re-trained and re-learned again. Model IDs (unlike name and version) are not exposed to
-     * the end user and only serve a technical purpose.
+     * can be changed freely. Changing model ID is equal to creating a completely new model.
+     * Model IDs (unlike name and version) are not exposed to the end user and only serve a
+     * technical purpose. ID's max length is 32 characters.
      *
      * @return Unique, <i>immutable</i> ID of this model.
      */
     String getId();
 
     /**
-     * Gets descriptive name of this model.
+     * Gets descriptive name of this model. Name's max length is 64 characters.
      *
      * @return Descriptive name for this model.
      */
     String getName();
 
     /**
-     * Gets the version of this model using semantic versioning. 
+     * Gets the version of this model using semantic versioning. Version's max length is 16 characters.
      *
      * @return A version compatible with (<a href="http://www.semver.org">www.semver.org</a>) specification.
      */

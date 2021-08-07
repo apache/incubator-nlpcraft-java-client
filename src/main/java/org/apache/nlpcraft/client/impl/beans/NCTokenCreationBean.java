@@ -24,13 +24,18 @@ import org.apache.nlpcraft.client.NCNewCompany;
  * REST bean.
  */
 public class NCTokenCreationBean extends NCStatusResponseBean implements NCNewCompany {
-    @SerializedName("token") private String token;
-    @SerializedName("adminId") private long adminId;
-    
-    @Override public String getToken() {
+    @SerializedName("token")
+    private String token;
+    @SerializedName("adminId")
+    private long adminId;
+
+    @Override
+    public String getToken() {
         return token;
     }
-    @Override public long getAdminUserId() {
+
+    @Override
+    public long getAdminUserId() {
         return adminId;
     }
 }

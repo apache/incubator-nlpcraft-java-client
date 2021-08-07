@@ -50,7 +50,7 @@ class NCCompanyTest extends NCTestAdapter {
         String city,
         String address,
         String postalCode,
-        Map<String, String> props
+        Map<String, Object> props
     ) {
         assertEquals(comp.getName(), name);
         assertEquals(comp.getWebsite(), website);
@@ -69,7 +69,7 @@ class NCCompanyTest extends NCTestAdapter {
      * @param other
      * @throws Exception
      */
-    private void test0(String name, Map<String, String> props, String other) throws Exception {
+    private void test0(String name, Map<String, Object> props, String other) throws Exception {
         String adminEmail = "test@" + UUID.randomUUID() + ".com";
         String adminPwd = "test";
     
@@ -103,6 +103,8 @@ class NCCompanyTest extends NCTestAdapter {
             other = "new " + other;
 
             if (props != null) {
+                props = new HashMap<>(props);
+
                 props.put("new", "new");
             }
     
@@ -137,11 +139,7 @@ class NCCompanyTest extends NCTestAdapter {
      */
     @Test
     void test() throws Exception {
-        Map<String, String> props = new HashMap<>();
-
-        props.put("k1", "v1");
-
-        test0("company", props, "company");
+        test0("company", MAP, "company");
         test0("company", null, null);
     }
 }

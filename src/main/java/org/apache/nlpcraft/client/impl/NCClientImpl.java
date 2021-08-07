@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ResponseHandler;
@@ -35,7 +36,9 @@ import org.apache.logging.log4j.Logger;
 import org.apache.nlpcraft.client.NCClient;
 import org.apache.nlpcraft.client.NCClientException;
 import org.apache.nlpcraft.client.NCCompany;
+import org.apache.nlpcraft.client.NCElementSynonymsData;
 import org.apache.nlpcraft.client.NCFeedback;
+import org.apache.nlpcraft.client.NCModelInfo;
 import org.apache.nlpcraft.client.NCNewCompany;
 import org.apache.nlpcraft.client.NCProbe;
 import org.apache.nlpcraft.client.NCResult;
@@ -46,9 +49,11 @@ import org.apache.nlpcraft.client.impl.beans.NCAskSyncBean;
 import org.apache.nlpcraft.client.impl.beans.NCCheckBean;
 import org.apache.nlpcraft.client.impl.beans.NCCompanyBean;
 import org.apache.nlpcraft.client.impl.beans.NCCompanyTokenResetBean;
+import org.apache.nlpcraft.client.impl.beans.NCElementSynonymsDataBean;
 import org.apache.nlpcraft.client.impl.beans.NCErrorMessageBean;
 import org.apache.nlpcraft.client.impl.beans.NCFeedbackAddBean;
 import org.apache.nlpcraft.client.impl.beans.NCFeedbackAllBean;
+import org.apache.nlpcraft.client.impl.beans.NCModelInfoResultBean;
 import org.apache.nlpcraft.client.impl.beans.NCProbesAllBean;
 import org.apache.nlpcraft.client.impl.beans.NCRequestStateBean;
 import org.apache.nlpcraft.client.impl.beans.NCSigninBean;
@@ -58,8 +63,6 @@ import org.apache.nlpcraft.client.impl.beans.NCTokenCreationBean;
 import org.apache.nlpcraft.client.impl.beans.NCUserAddBean;
 import org.apache.nlpcraft.client.impl.beans.NCUserBean;
 import org.apache.nlpcraft.client.impl.beans.NCUsersAllBean;
-import org.apache.nlpcraft.model.tools.embedded.NCEmbeddedProbe;
-import org.apache.nlpcraft.model.tools.embedded.NCEmbeddedResult;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -68,8 +71,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -80,32 +81,40 @@ import java.util.stream.Collectors;
 @SuppressWarnings("JavaDoc")
 public class NCClientImpl implements NCClient {
     private static final String STATUS_API_OK = "API_OK";
-    
+
+    private static final Type MAP_TYPE = new TypeToken<Map<String, Object>>(){}.getType();
+
+    private static final Gson gsonExt = new Gson();
     private static final Gson gson =
         new GsonBuilder().registerTypeAdapter(
             NCRequestStateBean.class,
             (JsonDeserializer<NCRequestStateBean>) (e, type, ctx) -> {
                 JsonObject o = e.getAsJsonObject();
                 NCRequestStateBean b = new NCRequestStateBean();
-    
+
                 b.setSrvReqId(o.get("srvReqId").getAsString());
                 b.setTxt(o.get("txt").getAsString());
                 b.setUsrId(o.get("usrId").getAsLong());
                 b.setMdlId(o.get("mdlId").getAsString());
                 b.setProbeId(convert(o, "probeId", JsonElement::getAsString));
-                b.setResType(convert(o, "resType", JsonElement::getAsString));
-                b.setResBody(
+                b.setResultType(convert(o, "resType", JsonElement::getAsString));
+                b.setResultBody(
                     convert(o, "resBody", (resBody) -> resBody == null ?
                         null :
                         resBody.isJsonObject() ?
                             resBody.getAsJsonObject().toString() :
                             resBody.getAsString())
                 );
+                b.setResultMeta(convert(o, "resMeta", e1 -> {
+                    Map<String, Object> m = gsonExt.fromJson(e1, MAP_TYPE);
+
+                    return m == null || m.isEmpty() ? null : m;
+                }));
                 b.setStatus(o.get("status").getAsString());
                 b.setErrorCode(convert(o, "errorCode", JsonElement::getAsInt));
                 b.setError(convert(o, "error", JsonElement::getAsString));
                 b.setLogHolder(convert(o, "logHolder", (logHolder) -> logHolder.getAsJsonObject().toString()));
-    
+
                 return b;
             }).create();
     
@@ -118,14 +127,10 @@ public class NCClientImpl implements NCClient {
     private String email;
     private String pwd;
     private Boolean cancelOnExit;
-    private Boolean embeddedProbe;
-    
+
     private CloseableHttpClient httpCli;
     private String acsTok;
     private volatile boolean started = false;
-    
-    private final Map<String, NCEmbeddedResult> embeddedResMap = new ConcurrentHashMap<>();
-    private final Object mux = new Object();
     
     private static<T> T convert(JsonObject o, String name, Function<JsonElement, T> converter) {
         JsonElement e = o.get(name);
@@ -141,11 +146,6 @@ public class NCClientImpl implements NCClient {
     @Override
     public String getClientUserPassword() {
         return pwd;
-    }
-
-    @Override
-    public boolean isClientEmbeddedMode() {
-        return embeddedProbe;
     }
 
     @Override
@@ -207,22 +207,6 @@ public class NCClientImpl implements NCClient {
     }
 
     /**
-     * 
-     * @param embeddedProbe
-     */
-    public void setEmbeddedProbe(Boolean embeddedProbe) {
-        this.embeddedProbe = embeddedProbe;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Boolean isEmbeddedProbe() {
-        return embeddedProbe;
-    }
-    
-    /**
      *
      * @return
      */
@@ -281,18 +265,6 @@ public class NCClientImpl implements NCClient {
         if (reqCfg == null)
             reqCfg = RequestConfig.DEFAULT;
     
-        if (embeddedProbe) {
-            Consumer<NCEmbeddedResult> embeddedCb = (NCEmbeddedResult res) -> {
-                embeddedResMap.put(res.getServerRequestId(), res);
-        
-                synchronized (mux) {
-                    mux.notifyAll();
-                }
-            };
-        
-            NCEmbeddedProbe.registerCallback(embeddedCb);
-        }
-        
         acsTok = restSignin();
         
         started = true;
@@ -408,7 +380,7 @@ public class NCClientImpl implements NCClient {
 
                 if (code == 200)
                     return js;
-    
+
                 NCErrorMessageBean err;
                 
                 try {
@@ -417,7 +389,7 @@ public class NCClientImpl implements NCClient {
                 catch (Exception e1) {
                     throw new NCClientException(String.format("Unexpected server error [code=%d]", code));
                 }
-    
+
                 throw new NCClientException(err.getMessage(), err.getCode());
             };
             
@@ -469,7 +441,7 @@ public class NCClientImpl implements NCClient {
         String lastName,
         String avatarUrl,
         boolean isAdmin,
-        Map<String, String> properties,
+        Map<String, Object> properties,
         String extId
     ) throws NCClientException, IOException {
         notNull(email, "email");
@@ -514,7 +486,7 @@ public class NCClientImpl implements NCClient {
     
     @Override
     public void updateUser(
-        long id, String firstName, String lastName, String avatarUrl, Map<String, String> properties
+        long id, String firstName, String lastName, String avatarUrl, Map<String, Object> properties
     ) throws NCClientException, IOException {
         notNull(firstName, "firstName");
         notNull(lastName, "lastName");
@@ -691,88 +663,6 @@ public class NCClientImpl implements NCClient {
         notNull(mdlId, "mdlId");
         notNull(txt, "txt");
 
-        if (embeddedProbe) {
-            String srvReqId = ask(mdlId, txt, data, enableLog, usrId, usrExtId);
-            int timeout = reqCfg.getSocketTimeout();
-            long maxTime = System.currentTimeMillis() + timeout;
-
-            while (true) {
-                NCEmbeddedResult res = embeddedResMap.get(srvReqId);
-
-                if (res != null)
-                    return new NCResult() {
-                        @Override
-                        public String getServerRequestId() {
-                            return res.getServerRequestId();
-                        }
-
-                        @Override
-                        public String getText() {
-                            return res.getOriginalText();
-                        }
-
-                        @Override
-                        public long getUserId() {
-                            return res.getUserId();
-                        }
-
-                        @Override
-                        public String getModelId() {
-                            return res.getModelId();
-                        }
-
-                        @Override
-                        public String getProbeId() {
-                            return res.getProbeId();
-                        }
-
-                        @Override
-                        public boolean isReady() {
-                            return true;
-                        }
-
-                        @Override
-                        public String getResultType() {
-                            return res.getType();
-                        }
-
-                        @Override
-                        public String getResultBody() {
-                            return res.getBody();
-                        }
-
-                        @Override
-                        public Integer getErrorCode() {
-                            return res.getErrorCode() ==  0 ? null : res.getErrorCode();
-                        }
-
-                        @Override
-                        public String getErrorMessage() {
-                            return res.getErrorMessage();
-                        }
-
-                        @Override
-                        public String getLogHolder() {
-                            return res.getLogHolderJson();
-                        }
-                    };
-
-                long sleepTime = maxTime - System.currentTimeMillis();
-
-                if (sleepTime <= 0)
-                    throw new NCClientException(String.format("Request timeout: %d", timeout));
-
-                synchronized (mux) {
-                    try {
-                        mux.wait(sleepTime);
-                    }
-                    catch (InterruptedException e) {
-                        throw new NCClientException("Result wait thread interrupted.", e);
-                    }
-                }
-            }
-        }
-
         NCAskSyncBean b =
             checkAndExtract(
                 post(
@@ -882,7 +772,7 @@ public class NCClientImpl implements NCClient {
     @Override
     public NCNewCompany addCompany(String name, String website, String country, String region, String city,
         String address, String postalCode, String adminEmail, String adminPasswd, String adminFirstName,
-        String adminLastName, String adminAvatarUrl, Map<String, String> props) throws IOException, NCClientException {
+        String adminLastName, String adminAvatarUrl, Map<String, Object> props) throws IOException, NCClientException {
         notNull(name, "name");
         notNull(adminEmail, "adminEmail");
         notNull(adminPasswd, "adminPasswd");
@@ -934,7 +824,7 @@ public class NCClientImpl implements NCClient {
         String city,
         String address,
         String postalCode,
-        Map<String, String> props
+        Map<String, Object> props
     ) throws IOException, NCClientException {
         notNull(name, "name");
     
@@ -997,5 +887,32 @@ public class NCClientImpl implements NCClient {
         );
 
         return res.getResult();
+    }
+
+    @Override
+    public NCElementSynonymsData getSynonyms(String mdlId, String elmId) throws NCClientException, IOException {
+        return checkAndExtract(
+            post(
+                "model/syns",
+                Pair.of("acsTok", acsTok),
+                Pair.of("mdlId", mdlId),
+                Pair.of("elmId", elmId)
+            ),
+            NCElementSynonymsDataBean.class
+        );
+    }
+
+    @Override
+    public NCModelInfo getModelInfo(String mdlId) throws NCClientException, IOException {
+        NCModelInfoResultBean res = checkAndExtract(
+            post(
+                "model/info",
+                Pair.of("acsTok", acsTok),
+                Pair.of("mdlId", mdlId)
+            ),
+            NCModelInfoResultBean.class
+        );
+
+        return res.getModel();
     }
 }

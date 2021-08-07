@@ -32,7 +32,7 @@ import java.util.Set;
  * <b>External User ID</b><br>
  * Several methods on Java client accept external "on-behalf-of" user ID (<code>usrExtId</code>) additionally to the regular
  * user ID (<code>usrID</code>). In these methods zero, one or both IDs should be provided. If none are provided
- * the ID of the currently signed in user will be used, and if both are provided they should point to the same user.
+ * the ID of the currently signed-in user will be used, and if both are provided they should point to the same user.
  * External user ID allows to use user identification from the external systems without a need to import all the
  * existing users into NLPCraft in the first place.
  * <p>
@@ -59,33 +59,25 @@ import java.util.Set;
  */
 public interface NCClient {
     /**
-     * Gets current signed in user email for this client.
+     * Gets current signed-in user email for this client.
      *
-     * @return Current signed in user email for this client.
+     * @return Current signed-in user email for this client.
      * @see NCClientBuilder
      */
     String getClientUserEmail();
 
     /**
-     * Gets current signed in user password for this client.
+     * Gets current signed-in user password for this client.
      *
-     * @return Current signed in user password for this client.
+     * @return Current signed-in user password for this client.
      * @see NCClientBuilder
      */
     String getClientUserPassword();
 
     /**
-     * Gets whether or not this client is configured with embedded probe.
-     *
-     * @return Whether or not this client is configured with embedded probe.
-     * @see NCClientBuilder
-     */
-    boolean isClientEmbeddedMode();
-
-    /**
-     * Gets whether or not this client is configured with cancel-on-exit logic.
+     * Gets whether this client is configured with cancel-on-exit logic.
      * 
-     * @return Whether or not this client is configured with cancel-on-exit logic
+     * @return Whether this client is configured with cancel-on-exit logic
      * @see NCClientBuilder
      */
     boolean isClientCancelOnExit();
@@ -103,7 +95,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin users can specify
@@ -123,7 +115,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin users can specify
@@ -143,7 +135,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin users can specify
@@ -177,7 +169,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin users can specify
@@ -193,7 +185,7 @@ public interface NCClient {
     List<NCFeedback> getAllFeedback(String srvReqId, Long usrId, String usrExtId) throws NCClientException, IOException;
 
     /**
-     * Adds new user to the company of the currently signed in user. Current signed in user must have
+     * Adds new user to the company of the currently signed-in user. Current signed-in user must have
      * administrative privileges.
      * <p>
      * <b>User IDs</b><br>
@@ -206,7 +198,7 @@ public interface NCClient {
      * @param firstName New user first name.
      * @param lastName New user last name.
      * @param avatarUrl Optional new user avatar URL. Can be {@code null}.
-     * @param isAdmin Whether or not the new user will have administrative privileges.
+     * @param isAdmin Whether the new user will have administrative privileges.
      * @param properties Map of additional user-defined user properties.
      * @param extId Optional external "on-behalf-of" user ID. Can be {@code null}.
      * @return ID of the newly created user.
@@ -220,12 +212,12 @@ public interface NCClient {
         String lastName,
         String avatarUrl,
         boolean isAdmin,
-        Map<String, String> properties,
+        Map<String, Object> properties,
         String extId
     ) throws NCClientException, IOException;
 
     /**
-     * Updates given user. Current signed in user must have administrative privileges.
+     * Updates given user. Current signed-in user must have administrative privileges.
      *
      * @param id User ID.
      * @param firstName Mandatory user first name.
@@ -240,12 +232,12 @@ public interface NCClient {
         String firstName,
         String lastName,
         String avatarUrl,
-        Map<String, String> properties
+        Map<String, Object> properties
     ) throws NCClientException, IOException;
 
     /**
      * Resets password for the given user. Note that NLPCraft doesn't store clear text passwords and therefore
-     * passwords cannot be retrieved - they can only be reset. Current signed in user must have
+     * passwords cannot be retrieved - they can only be reset. Current signed-in user must have
      * administrative privileges.
      *
      * @param id ID of the user for which to reset the password.
@@ -256,7 +248,7 @@ public interface NCClient {
     void resetUserPassword(Long id, String newPasswd) throws NCClientException, IOException;
 
     /**
-     * Grants or denies given user administrative privileges. Current signed in user must have
+     * Grants or denies given user administrative privileges. Current signed-in user must have
      * administrative privileges.
      * 
      * @param id ID of the user for which to change administrative privileges.
@@ -268,11 +260,11 @@ public interface NCClient {
 
     /**
      * Deletes given user. Note that you cannot delete the last admin in the company.
-     * Current signed in user must have administrative privileges.
+     * Current signed-in user must have administrative privileges.
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin
@@ -291,7 +283,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin
@@ -306,7 +298,7 @@ public interface NCClient {
     NCUser getUser(Long usrId, String usrExtId) throws NCClientException, IOException;
 
     /**
-     * Gets all user records for the current signed in user company. Current signed in user must
+     * Gets all user records for the current signed-in user company. Current signed-in user must
      * have administrative privileges.
      *
      * @return List of user records.
@@ -316,8 +308,8 @@ public interface NCClient {
     List<NCUser> getAllUsers() throws NCClientException, IOException;
 
     /**
-     * Gets all active (connected to the REST server) probes for the current signed in user company.
-     * Current signed in user must have administrative privileges.
+     * Gets all active (connected to the REST server) probes for the current signed-in user company.
+     * Current signed-in user must have administrative privileges.
      * 
      * @return List of active probes.
      * @throws NCClientException Thrown in case of client-specific errors.
@@ -331,7 +323,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin
@@ -340,7 +332,7 @@ public interface NCClient {
      * @param mdlId ID of the model to submit the request to.
      * @param txt Text to process.
      * @param data Optional JSON data payload. Can be {@code null} or empty.
-     * @param enableLog Whether or not to enable processing log collection.
+     * @param enableLog Whether to enable processing log collection.
      * @param usrId Optional user ID.
      * @param usrExtId Optional external "on-behalf-of" user ID.
      * @return Server request ID of the submitted request.
@@ -374,7 +366,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin
@@ -383,7 +375,7 @@ public interface NCClient {
      * @param mdlId ID of the model to submit the request to.
      * @param txt Text to process.
      * @param data Optional JSON data payload.
-     * @param enableLog Whether or not to enable processing log collection.
+     * @param enableLog Whether to enable processing log collection.
      * @param usrId Optional user ID.
      * @param usrExtId Optional external "on-behalf-of" user ID.
      * @return Query processing result.
@@ -406,7 +398,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin
@@ -435,7 +427,7 @@ public interface NCClient {
      * <p>
      * <b>User IDs</b><br>
      * This method allows multiple ways of specifying the ID of the user. If neither <code>usrId</code>
-     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed in user ID
+     * or <code>usrExtId</code> are provided (both are <code>null</code>) then the currently signed-in user ID
      * of this client instance will be used by default. If both user IDs are provided they must identify the same
      * user in NLPCraft. If only external "on-behalf-of" <code>usrExtId</code> parameter is provided and such user
      * doesn't yet exist in NLPCraft - it will be automatically created. Note that only admin
@@ -485,11 +477,11 @@ public interface NCClient {
         String adminFirstName,
         String adminLastName,
         String adminAvatarUrl,
-        Map<String, String> properties
+        Map<String, Object> properties
     ) throws NCClientException, IOException;
 
     /**
-     * Gets the company descriptor for the current signed in user.
+     * Gets the company descriptor for the current signed-in user.
      *
      * @return Company descriptor.
      * @throws NCClientException Thrown in case of client-specific errors.
@@ -498,7 +490,7 @@ public interface NCClient {
     NCCompany getCompany() throws NCClientException, IOException;
 
     /**
-     * Updates company information for the current signed in user. Current signed in user must have
+     * Updates company information for the current signed-in user. Current signed-in user must have
      * administrative privileges. Note that users cannot update or get information about other
      * companies.
      *
@@ -521,7 +513,7 @@ public interface NCClient {
         String city,
         String address,
         String postalCode,
-        Map<String, String> properties
+        Map<String, Object> properties
     ) throws NCClientException, IOException;
 
     /**
@@ -555,7 +547,13 @@ public interface NCClient {
      * @throws IOException Thrown in case of generic I/O errors.
      * @see <a href="https://nlpcraft.apache.org/tools/syn_tool.html">Synonym suggestion tool</a>.
      */
-    NCSuggestionData suggestSynonyms(String mdlId, Double minScore)  throws NCClientException, IOException;
+    NCSuggestionData suggestSynonyms(String mdlId, Double minScore) throws NCClientException, IOException;
+
+    // TODO:
+    NCElementSynonymsData getSynonyms(String mdlId, String elmId) throws NCClientException, IOException;
+
+    // TODO:
+    NCModelInfo getModelInfo(String mdlId) throws NCClientException, IOException;
     
     /**
      * Closes the client and signs out from the REST server. Any further calls to this client will result in

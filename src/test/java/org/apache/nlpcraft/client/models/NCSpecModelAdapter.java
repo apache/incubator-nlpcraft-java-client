@@ -38,6 +38,12 @@ abstract class NCSpecModelAdapter implements NCModel {
         return "1.0.0";
     }
 
+    /**
+     *
+     * @param id
+     * @param syns
+     * @return
+     */
     protected NCElement mkElement(String id, String... syns) {
         return new NCElement() {
             @Override
@@ -49,8 +55,11 @@ abstract class NCSpecModelAdapter implements NCModel {
             public List<String> getSynonyms() {
                 List<String> l = new ArrayList<>();
 
+                if (syns.length != 0) {
+                    l.addAll(Arrays.asList(syns));
+                }
+
                 l.add(id);
-                l.addAll(Arrays.asList(syns));
 
                 return l;
             }

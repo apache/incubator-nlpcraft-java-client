@@ -62,9 +62,9 @@ public interface NCUser {
     String getAvatarUrl();
 
     /**
-     * Gets whether or not this user has administrative privileges.
+     * Gets whether this user has administrative privileges.
      *
-     * @return Whether or not this user has administrative privileges.
+     * @return Whether this user has administrative privileges.
      */
     boolean isAdmin();
     
@@ -80,5 +80,5 @@ public interface NCUser {
      *
      * @return Optional user properties (metadata).
      */
-    Map<String, String> getProperties();
+    Map<String, Object> getProperties();
 }

@@ -23,7 +23,8 @@ import com.google.gson.annotations.SerializedName;
  * REST bean.
  */
 public class NCStatusResponseBean {
-    @SerializedName("status") private String status;
+    @SerializedName("status")
+    private String status;
 
     public String getStatus() {
         return status;

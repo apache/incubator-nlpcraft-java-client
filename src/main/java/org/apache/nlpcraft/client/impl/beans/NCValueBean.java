@@ -18,17 +18,24 @@
 package org.apache.nlpcraft.client.impl.beans;
 
 import com.google.gson.annotations.SerializedName;
+import org.apache.nlpcraft.client.NCValue;
+
+import java.util.List;
 
 /**
  * REST bean.
  */
-public class NCAskSyncBean extends NCStatusResponseBean {
-    @SerializedName("state")
-    private NCRequestStateBean state;
+public class NCValueBean implements NCValue {
+    @SerializedName("name") private String name;
+    @SerializedName("synonyms") private List<String> synonyms;
 
-    public NCRequestStateBean getState() {
-        return state;
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public List<String> getSynonyms() {
+        return synonyms;
     }
 }
-
-

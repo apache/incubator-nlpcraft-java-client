@@ -83,7 +83,8 @@ class NCAskTest extends NCTestAdapter {
      */
     @Test
     void test() throws Exception {
-        test0("test", this::checkOk);
+        test0("test", res -> checkOk(res, null));
+        test0("meta", res -> checkOk(res, NCCommonSpecModel.MAP));
         test0("El tiempo en España", this::checkError);
     }
 }

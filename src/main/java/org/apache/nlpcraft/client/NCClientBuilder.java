@@ -38,7 +38,7 @@ import java.util.function.Supplier;
  *         .build();
  *
  *     // Perform any necessary calls...
- *     NCResult res = cli.askSync("my.model.id", txt);
+ *     NCResult res = cli.askSync("my.model.id", "My question or query");
  *
  *     // Close client &amp; sign out at the end.
  *     cli.close();
@@ -53,9 +53,7 @@ public class NCClientBuilder {
     public static final String DFLT_PWD = "admin";
     /** Default cancel on exit flag. */
     public static final boolean DFLT_CANCEL_ON_EXIT = true;
-    /** Default embedded probe mode. */
-    public static final boolean DFLT_EMBEDDED_PROBE = false;
-    
+
     private final NCClientImpl impl = new NCClientImpl();
     
     /**
@@ -119,21 +117,6 @@ public class NCClientBuilder {
     }
     
     /**
-     * Sets embedded probe mode flag. If set to {@code true} the implementation
-     * will expect that the embedded probe is running in the local JVM and will receive
-     * query result via local callbacks. See <code>NCEmbeddedProbe</code> class for more details.
-     *
-     * @param embeddedMode Embedded probe mode.
-     * @return Current client builder.
-     * @see #DFLT_EMBEDDED_PROBE
-     */
-    public NCClientBuilder setEmbeddedProbe(boolean embeddedMode) {
-        impl.setEmbeddedProbe(embeddedMode);
-
-        return this;
-    }
-    
-    /**
      * Builds a client instance with configured settings.
      *
      * @return Newly created instance of {@link NCClient}.
@@ -144,7 +127,7 @@ public class NCClientBuilder {
         if (impl.getEmail() == null && impl.getPassword() != null ||
             impl.getEmail() != null && impl.getPassword() == null
         )
-            throw new IllegalArgumentException("Both email and password should be null or not null");
+            throw new IllegalArgumentException("Both email and password should be null or not null.");
         
         if (impl.getBaseUrl() == null)
             impl.setBaseUrl(DFLT_BASEURL);
@@ -160,9 +143,6 @@ public class NCClientBuilder {
         
         if (impl.isCancelOnExit() == null)
             impl.setCancelOnExit(DFLT_CANCEL_ON_EXIT);
-
-        if (impl.isEmbeddedProbe() == null)
-            impl.setEmbeddedProbe(DFLT_EMBEDDED_PROBE);
 
         impl.initialize();
         

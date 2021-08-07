@@ -15,34 +15,18 @@
  * limitations under the License.
  */
 
-package org.apache.nlpcraft.client.models;
+package org.apache.nlpcraft.client.impl.beans;
 
-import org.apache.nlpcraft.model.NCElement;
-import org.apache.nlpcraft.model.NCIntent;
-import org.apache.nlpcraft.model.NCIntentSample;
-
-import java.util.Collections;
-import java.util.Set;
+import com.google.gson.annotations.SerializedName;
 
 /**
- * Test model.
+ * REST bean.
  */
-public class NCSuggestionSpecModel extends NCSpecModelAdapter {
-    public static final String MDL_ID = NCSuggestionSpecModel.class.getSimpleName();
+public class NCModelInfoResultBean extends NCStatusResponseBean {
+    @SerializedName("model")
+    private NCModelInfoBean model;
 
-    @Override
-    public String getId() {
-        return MDL_ID;
-    }
-
-    @Override
-    public Set<NCElement> getElements() {
-        return Collections.singleton(mkElement( "test"));
-    }
-
-    @NCIntentSample({"Tests passed well"})
-    @NCIntent("intent=intentId term~{tok_id() == 'test'}")
-    public org.apache.nlpcraft.model.NCResult onTest() {
-        return org.apache.nlpcraft.model.NCResult.text("OK");
+    public NCModelInfoBean getModel() {
+        return model;
     }
 }

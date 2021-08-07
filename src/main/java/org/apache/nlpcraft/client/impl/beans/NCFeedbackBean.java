@@ -30,40 +30,56 @@ public class NCFeedbackBean implements NCFeedback {
     private String comment;
     private long createTstamp;
 
-    @Override public String getServerRequestId() {
+    @Override
+    public String getServerRequestId() {
         return srvReqId;
     }
-    @Override public long getCreateTimestamp() {
+
+    public void setServerRequestId(String srvReqId) {
+        this.srvReqId = srvReqId;
+    }
+
+    @Override
+    public long getCreateTimestamp() {
         return createTstamp;
     }
-    @Override public long getUserId() {
+
+    @Override
+    public long getUserId() {
         return usrId;
     }
-    @Override public double getScore() {
+
+    @Override
+    public double getScore() {
         return score;
     }
-    @Override public String getComment() {
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    @Override
+    public String getComment() {
         return comment;
     }
-    @Override public long getId() {
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    @Override
+    public long getId() {
         return id;
     }
 
     public void setId(long id) {
         this.id = id;
     }
-    public void setServerRequestId(String srvReqId) {
-        this.srvReqId = srvReqId;
-    }
+
     public void setUsrId(long usrId) {
         this.usrId = usrId;
     }
-    public void setScore(double score) {
-        this.score = score;
-    }
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+
     public void setCreateTstamp(long createTstamp) {
         this.createTstamp = createTstamp;
     }

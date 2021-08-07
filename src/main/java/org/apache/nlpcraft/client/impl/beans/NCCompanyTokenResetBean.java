@@ -22,8 +22,9 @@ import com.google.gson.annotations.SerializedName;
 /**
  * REST bean.
  */
-public class NCCompanyTokenResetBean extends NCStatusResponseBean  {
-    @SerializedName("token") private String token;
+public class NCCompanyTokenResetBean extends NCStatusResponseBean {
+    @SerializedName("token")
+    private String token;
 
     public String getToken() {
         return token;

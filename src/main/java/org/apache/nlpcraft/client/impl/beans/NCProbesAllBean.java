@@ -24,8 +24,9 @@ import java.util.List;
 /**
  * REST bean.
  */
-public class NCProbesAllBean extends NCStatusResponseBean  {
-    @SerializedName("probes") private List<NCProbeBean> probes;
+public class NCProbesAllBean extends NCStatusResponseBean {
+    @SerializedName("probes")
+    private List<NCProbeBean> probes;
 
     public List<NCProbeBean> getProbes() {
         return probes;

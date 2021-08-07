@@ -21,9 +21,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Result container returned by {@link NCClient#suggestSynonyms(String, Double)} method.
+ * Synonym suggestion tool result descriptor.
  *
  * @see <a href="https://nlpcraft.apache.org/tools/syn_tool.html">Synonym suggestion tool</a>.
+ * @see NCClient#suggestSynonyms(String, Double)
  */
 public interface NCSuggestionData {
     /**

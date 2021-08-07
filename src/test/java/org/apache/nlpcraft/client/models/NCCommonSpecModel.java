@@ -19,14 +19,32 @@ package org.apache.nlpcraft.client.models;
 
 import org.apache.nlpcraft.model.NCElement;
 import org.apache.nlpcraft.model.NCIntent;
+import org.apache.nlpcraft.model.NCResult;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * Test model.
  */
 public class NCCommonSpecModel extends NCSpecModelAdapter {
+    public static final Map<String, Object> MAP = new HashMap<>();
+
+    static {
+        MAP.put("k1", "v1");
+        MAP.put("k2", 2.2);
+
+        Map<String, Object> m = new HashMap<>();
+
+        m.put("k11", "v11");
+        m.put("k12", 2.22);
+
+        MAP.put("k3", m);
+    }
+
     public static final String MDL_ID = NCCommonSpecModel.class.getSimpleName();
 
     @Override
@@ -36,11 +54,21 @@ public class NCCommonSpecModel extends NCSpecModelAdapter {
 
     @Override
     public Set<NCElement> getElements() {
-        return Collections.singleton(mkElement("test"));
+        return new HashSet<>(Arrays.asList(mkElement("test"), mkElement("meta")));
     }
 
     @NCIntent("intent=intentId term~{tok_id() == 'test'}")
     public org.apache.nlpcraft.model.NCResult onTest() {
         return org.apache.nlpcraft.model.NCResult.text("OK");
     }
+
+    @NCIntent("intent=intentMetaId term~{tok_id() == 'meta'}")
+    public org.apache.nlpcraft.model.NCResult onMeta() {
+        NCResult res = NCResult.text("OK");
+
+        res.getMetadata().putAll(MAP);
+
+        return res;
+    }
+
 }
