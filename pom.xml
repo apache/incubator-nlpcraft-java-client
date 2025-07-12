@@ -25,7 +25,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <apache.httpcomponents.ver>4.5.13</apache.httpcomponents.ver>
-        <apache.common.lang.ver>3.11</apache.common.lang.ver>
+        <apache.common.lang.ver>3.18.0</apache.common.lang.ver>
         <commons.validator.ver>1.7</commons.validator.ver>
         <gson.ver>2.8.6</gson.ver>
         <log4j.ver>2.14.0</log4j.ver>
